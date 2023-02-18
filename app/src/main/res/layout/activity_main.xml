@@ -21,12 +21,14 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <Button
-        android:id="@+id/Calculate"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
-        android:text="Посчитать"
-        app:layout_constraintEnd_toEndOf="parent"
+        android:id="@+id/CalculateByM"
+        android:layout_width="150dp"
+        android:layout_height="50dp"
+        android:layout_marginStart="40dp"
+        android:layout_marginTop="8dp"
+        android:text="Расчет по м2"
+        android:textSize="12sp"
+        android:textStyle="bold"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/SearchingSquare" />
 
@@ -44,8 +46,8 @@
 
     <TextView
         android:id="@+id/BoxVolume"
-        android:layout_width="132dp"
-        android:layout_height="18dp"
+        android:layout_width="150dp"
+        android:layout_height="20dp"
         android:layout_marginStart="40dp"
         android:layout_marginTop="8dp"
         android:text="Площадь упаковки"
@@ -58,16 +60,16 @@
 
     <TextView
         android:id="@+id/Square"
-        android:layout_width="161dp"
-        android:layout_height="21dp"
-        android:layout_marginTop="110dp"
-        android:text="Необходимая площадь"
+        android:layout_width="150dp"
+        android:layout_height="20dp"
+        android:layout_marginStart="40dp"
+        android:layout_marginTop="16dp"
+        android:text="Нужо m2"
         android:textAlignment="center"
         android:textColor="@color/black"
         android:textStyle="bold"
-        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView14" />
+        app:layout_constraintTop_toBottomOf="@+id/BoxSquare" />
 
     <TextView
         android:id="@+id/TileSquare"
@@ -80,7 +82,7 @@
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/Calculate" />
+        app:layout_constraintTop_toBottomOf="@+id/CalculateByPack" />
 
     <TextView
         android:id="@+id/Result"
@@ -116,20 +118,20 @@
 
     <TextView
         android:id="@+id/BoxCount"
-        android:layout_width="80dp"
+        android:layout_width="110dp"
         android:layout_height="50dp"
-        android:layout_marginStart="50dp"
+        android:layout_marginStart="10dp"
         android:layout_marginTop="16dp"
         android:text="0"
-        android:textAlignment="center"
-        android:textSize="24sp"
+        android:textAlignment="textEnd"
+        android:textSize="34sp"
         android:textStyle="bold"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/PackagingBox" />
 
     <TextView
-        android:id="@+id/textView8"
-        android:layout_width="80dp"
+        android:id="@+id/PackInfo"
+        android:layout_width="wrap_content"
         android:layout_height="20dp"
         android:layout_marginStart="8dp"
         android:layout_marginTop="40dp"
@@ -142,36 +144,35 @@
 
     <TextView
         android:id="@+id/TileCount"
-        android:layout_width="80dp"
+        android:layout_width="60dp"
         android:layout_height="50dp"
-        android:layout_marginStart="27dp"
+        android:layout_marginStart="8dp"
         android:layout_marginTop="16dp"
         android:text="0"
-        android:textAlignment="center"
+        android:textAlignment="textEnd"
         android:textAllCaps="false"
-        android:textSize="24sp"
+        android:textSize="34sp"
         android:textStyle="bold"
-        app:layout_constraintStart_toEndOf="@+id/textView8"
+        app:layout_constraintStart_toEndOf="@+id/PackInfo"
         app:layout_constraintTop_toBottomOf="@+id/PackagingBox" />
 
     <TextView
-        android:id="@+id/textView11"
-        android:layout_width="40dp"
+        android:id="@+id/TilesInfo"
+        android:layout_width="wrap_content"
         android:layout_height="20dp"
         android:layout_marginStart="8dp"
         android:layout_marginTop="40dp"
-        android:layout_marginEnd="50dp"
-        android:text="Штук"
+        android:text="ШТУК"
         android:textAlignment="center"
+        android:textColor="@android:color/holo_blue_dark"
         android:textStyle="bold"
-        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/TileCount"
         app:layout_constraintTop_toBottomOf="@+id/PackagingBox" />
 
     <TextView
         android:id="@+id/OldResult"
         android:layout_width="350dp"
-        android:layout_height="140dp"
+        android:layout_height="wrap_content"
         android:layout_marginBottom="8dp"
         android:shadowColor="@android:color/holo_blue_light"
         android:text="История:"
@@ -188,9 +189,8 @@
 
     <TextView
         android:id="@+id/TileInBox"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="80dp"
+        android:layout_width="130dp"
+        android:layout_height="20dp"
         android:layout_marginTop="8dp"
         android:layout_marginEnd="40dp"
         android:text="Штук в упаковке"
@@ -198,7 +198,6 @@
         android:textColor="@color/black"
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/BoxVolume"
         app:layout_constraintTop_toBottomOf="@+id/textView14" />
 
     <EditText
@@ -207,13 +206,11 @@
         android:layout_height="50dp"
         android:layout_marginStart="40dp"
         android:layout_marginTop="40dp"
-        android:layout_marginEnd="50dp"
         android:ems="10"
         android:inputType="numberDecimal"
         android:textAlignment="center"
         android:textColor="@color/black"
         android:textStyle="bold"
-        app:layout_constraintEnd_toStartOf="@+id/TilesInBox"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView14" />
 
@@ -233,16 +230,66 @@
 
     <EditText
         android:id="@+id/SearchingSquare"
-        android:layout_width="200dp"
+        android:layout_width="150dp"
         android:layout_height="50dp"
+        android:layout_marginStart="40dp"
         android:layout_marginTop="8dp"
         android:ems="10"
         android:inputType="numberDecimal"
         android:textAlignment="center"
         android:textColor="@color/black"
         android:textStyle="bold"
-        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/Square" />
+
+    <TextView
+        android:id="@+id/textView"
+        android:layout_width="130dp"
+        android:layout_height="20dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="40dp"
+        android:text="Нужно штук"
+        android:textAlignment="center"
+        android:textColor="@color/black"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/TilesInBox" />
+
+    <EditText
+        android:id="@+id/SearchingTiles"
+        android:layout_width="130dp"
+        android:layout_height="50dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="40dp"
+        android:ems="10"
+        android:inputType="number"
+        android:textAlignment="center"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView" />
+
+    <Button
+        android:id="@+id/CalculateByPieces"
+        android:layout_width="130dp"
+        android:layout_height="50dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="40dp"
+        android:text="Расчет по штукам"
+        android:textSize="12sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/SearchingTiles" />
+
+    <Button
+        android:id="@+id/CalculateByPack"
+        android:layout_width="300dp"
+        android:layout_height="50dp"
+        android:layout_marginTop="8dp"
+        android:text="Расчет кратно упаковке"
+        android:textSize="12sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/CalculateByM" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
