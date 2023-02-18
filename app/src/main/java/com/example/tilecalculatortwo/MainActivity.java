@@ -2,6 +2,7 @@ package com.example.tilecalculatortwo;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.graphics.Color;
 import android.os.Bundle;
 import android.text.method.ScrollingMovementMethod;
 import android.view.View;
@@ -77,6 +78,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     }
 
     private void calculateSquareByM(){
+        setBackgroundEditText(Color.parseColor("#42A346"),
+                Color.parseColor("#42A346"),
+                Color.parseColor("#42A346"),0);
         if(!checkData(searchingSquad)){
             return;
         }
@@ -105,6 +109,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     }
 
     private void calculateSquareByTiles(){
+        setBackgroundEditText(Color.parseColor("#C5D617"),
+                Color.parseColor("#C5D617"),
+                0,Color.parseColor("#C5D617"));
         if(!checkData(searchingTiles)){
             return;
         }
@@ -126,6 +133,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     }
 
     private void calculateSquareByPack(){
+        setBackgroundEditText(Color.parseColor("#79B9EC"), 0,
+                Color.parseColor("#79B9EC"),0);
         if(!checkBoxAndSquare(searchingSquad)){
             return;
         }
@@ -144,6 +153,14 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         setBoxInformation(res, 1);
         results.add("В упаковке - " + box + "м2. S = " +
                 search + "м2. Итог: " + finB + "\n");
+    }
+
+    private void setBackgroundEditText(int boxSq, int tilesInB,
+                                       int searchingSq, int searchingTi){
+        boxSquare.setBackgroundColor(boxSq);
+        tilesInBox.setBackgroundColor(tilesInB);
+        searchingSquad.setBackgroundColor(searchingSq);
+        searchingTiles.setBackgroundColor(searchingTi);
     }
 
     private boolean checkData(EditText editText){
