@@ -78,9 +78,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     }
 
     private void calculateSquareByM(){
-        setBackgroundEditText(Color.parseColor("#42A346"),
-                Color.parseColor("#42A346"),
-                Color.parseColor("#42A346"),0);
+        setBackgroundEditText(Color.parseColor("#75EC7A"),
+                Color.parseColor("#75EC7A"),
+                Color.parseColor("#75EC7A"),0);
         if(!checkData(searchingSquad)){
             return;
         }
@@ -109,9 +109,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     }
 
     private void calculateSquareByTiles(){
-        setBackgroundEditText(Color.parseColor("#C5D617"),
-                Color.parseColor("#C5D617"),
-                0,Color.parseColor("#C5D617"));
+        setBackgroundEditText(Color.parseColor("#FBEB59"),
+                Color.parseColor("#FBEB59"),
+                0,Color.parseColor("#FBEB59"));
         if(!checkData(searchingTiles)){
             return;
         }
@@ -140,6 +140,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         }
         String box = boxSquare.getText().toString();
         String search = searchingSquad.getText().toString();
+        searchingTiles.setText("");
         BigDecimal boxB = new BigDecimal(box);
         BigDecimal searchB = new BigDecimal(search);
         BigDecimal searchingBox = searchB.divide(boxB, 20, RoundingMode.HALF_UP);
@@ -165,11 +166,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     private boolean checkData(EditText editText){
         String countTiles = tilesInBox.getText().toString();
-        if(!checkBoxAndSquare(editText) || countTiles.isEmpty()){
-            if(countTiles.isEmpty()){
-                Toast.makeText(getApplicationContext(), "Не все поля заполненны, " +
+        if(!checkBoxAndSquare(editText)){
+            return false;
+        } else if(countTiles.isEmpty()){
+            Toast.makeText(getApplicationContext(), "Не все поля заполненны, " +
                         "расчет невозможен", Toast.LENGTH_LONG).show();
-            }
             return false;
         }
         return true;

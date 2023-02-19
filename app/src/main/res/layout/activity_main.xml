@@ -6,27 +6,13 @@
     android:layout_height="match_parent"
     tools:context=".MainActivity">
 
-    <TextView
-        android:id="@+id/textView14"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
-        android:text="Добро пожаловать в программу расчета плитки"
-        android:textAlignment="center"
-        android:textColor="@color/black"
-        android:textStyle="bold"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.494"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
     <Button
         android:id="@+id/CalculateByM"
         android:layout_width="150dp"
         android:layout_height="50dp"
         android:layout_marginStart="40dp"
         android:layout_marginTop="8dp"
-        android:background="#42A346"
+        android:background="#75EC7A"
         android:text="Расчет по м2"
         android:textSize="12sp"
         android:textStyle="bold"
@@ -51,14 +37,14 @@
         android:layout_width="150dp"
         android:layout_height="20dp"
         android:layout_marginStart="40dp"
-        android:layout_marginTop="8dp"
+        android:layout_marginTop="16dp"
         android:text="Площадь упаковки"
         android:textAlignment="center"
         android:textColor="@color/black"
         android:textSize="14sp"
         android:textStyle="bold"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView14" />
+        app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
         android:id="@+id/Square"
@@ -66,7 +52,7 @@
         android:layout_height="20dp"
         android:layout_marginStart="40dp"
         android:layout_marginTop="16dp"
-        android:text="Нужо m2"
+        android:text="Нужно m2"
         android:textAlignment="center"
         android:textColor="@color/black"
         android:textStyle="bold"
@@ -193,34 +179,34 @@
         android:id="@+id/TileInBox"
         android:layout_width="130dp"
         android:layout_height="20dp"
-        android:layout_marginTop="8dp"
+        android:layout_marginTop="16dp"
         android:layout_marginEnd="40dp"
         android:text="Штук в упаковке"
         android:textAlignment="center"
         android:textColor="@color/black"
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView14" />
+        app:layout_constraintTop_toTopOf="parent" />
 
     <EditText
         android:id="@+id/BoxSquare"
         android:layout_width="150dp"
         android:layout_height="50dp"
         android:layout_marginStart="40dp"
-        android:layout_marginTop="40dp"
+        android:layout_marginTop="16dp"
         android:ems="10"
         android:inputType="numberDecimal"
         android:textAlignment="center"
         android:textColor="@color/black"
         android:textStyle="bold"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView14" />
+        app:layout_constraintTop_toBottomOf="@+id/BoxVolume" />
 
     <EditText
         android:id="@+id/TilesInBox"
         android:layout_width="130dp"
         android:layout_height="50dp"
-        android:layout_marginTop="40dp"
+        android:layout_marginTop="16dp"
         android:layout_marginEnd="40dp"
         android:ems="10"
         android:inputType="number"
@@ -228,7 +214,7 @@
         android:textColor="@color/black"
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView14" />
+        app:layout_constraintTop_toBottomOf="@+id/TileInBox" />
 
     <EditText
         android:id="@+id/SearchingSquare"
@@ -276,7 +262,7 @@
         android:layout_height="50dp"
         android:layout_marginTop="8dp"
         android:layout_marginEnd="40dp"
-        android:background="#C5D617"
+        android:background="#FBEB59"
         android:text="Расчет по штукам"
         android:textSize="12sp"
         android:textStyle="bold"
