@@ -10,12 +10,10 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
-
-import java.math.BigDecimal;
-import java.math.RoundingMode;
 import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
+    Calculator calculator;
     ArrayList<String> results = new ArrayList<>();
     Button calculateByM;
     Button calculateByTiles;
@@ -54,6 +52,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         calculateByM.setOnClickListener(this);
         history.setOnClickListener(this);
         history.setMovementMethod(new ScrollingMovementMethod());
+        calculator = new Calculator(result, boxCount, tileCount, packInfo, tilesInfo);
 
         calculateByTiles.setOnClickListener(this);
         calculateByM.setOnClickListener(this);
@@ -78,9 +77,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     }
 
     private void calculateSquareByM(){
-        setBackgroundEditText(Color.parseColor("#75EC7A"),
-                Color.parseColor("#75EC7A"),
-                Color.parseColor("#75EC7A"),0);
+        int buttonColor = Color.parseColor("#75EC7A");
+        setBackgroundEditText(buttonColor,
+                buttonColor, buttonColor,0);
         if(!checkData(searchingSquad)){
             return;
         }
@@ -88,30 +87,15 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         String countTiles = tilesInBox.getText().toString();
         String search = searchingSquad.getText().toString();
         searchingTiles.setText("");
-        int countTilesInt = Integer.parseInt(countTiles);
-        BigDecimal boxB = new BigDecimal(box);
-        BigDecimal countTilesB = new BigDecimal(countTiles);
-        BigDecimal oneTile = boxB.divide(countTilesB, 20, RoundingMode.HALF_UP);
-        BigDecimal searchB = new BigDecimal(search);
-        int res = searchB.divide(oneTile, 20, RoundingMode.HALF_UP)
-                .intValue();
-        double resD = searchB.divide(oneTile, 20, RoundingMode.HALF_UP)
-                .doubleValue();
-        if(Double.compare(resD, Double.valueOf(res))!=0){
-            res= res+1;
-        }
-        BigDecimal finB = oneTile.multiply(new BigDecimal(res));
-        result.setText(finB.setScale(4,RoundingMode.HALF_UP).toString());
-        setBoxInformation(res, countTilesInt);
         results.add("В упаковке - " + box + "м2 - " +
-                countTiles + "шт. S = " + search +
-                "м2. Итог: " + finB.toString() + "\n");
+                countTiles + "шт. S = " + search + "м2. Итог: " +
+                calculator.calculateSquareByMeters(box, countTiles, search) + "\n");
     }
 
     private void calculateSquareByTiles(){
-        setBackgroundEditText(Color.parseColor("#FBEB59"),
-                Color.parseColor("#FBEB59"),
-                0,Color.parseColor("#FBEB59"));
+        int buttonColor = Color.parseColor("#FBEB59");
+        setBackgroundEditText(buttonColor, buttonColor,
+                0,buttonColor);
         if(!checkData(searchingTiles)){
             return;
         }
@@ -119,41 +103,23 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         String countTiles = tilesInBox.getText().toString();
         String search = searchingTiles.getText().toString();
         searchingSquad.setText("");
-        int countTilesInt = Integer.parseInt(countTiles);
-        BigDecimal boxB = new BigDecimal(box);
-        BigDecimal countTilesB = new BigDecimal(countTiles);
-        BigDecimal oneTile = boxB.divide(countTilesB, 20, RoundingMode.HALF_UP);
-        int searchingTiles = Integer.parseInt(search);
-        BigDecimal finB = oneTile.multiply(new BigDecimal(searchingTiles));
-        result.setText(finB.setScale(4,RoundingMode.HALF_UP).toString());
-        setBoxInformation(searchingTiles, countTilesInt);
         results.add("В упаковке - " + box + "м2 - " +
-                countTiles + "шт. нужно штук: " + search +
-                "шт. Итог: " + finB.toString() + "\n");
+                countTiles + "шт. нужно штук: " + search + "шт. Итог: " +
+                calculator.calculateSquareByTiles(box, countTiles, search) + "\n");
     }
 
     private void calculateSquareByPack(){
-        setBackgroundEditText(Color.parseColor("#79B9EC"), 0,
-                Color.parseColor("#79B9EC"),0);
+        int buttonColor = Color.parseColor("#79B9EC");
+        setBackgroundEditText(buttonColor, 0,
+                buttonColor,0);
         if(!checkBoxAndSquare(searchingSquad)){
             return;
         }
         String box = boxSquare.getText().toString();
         String search = searchingSquad.getText().toString();
         searchingTiles.setText("");
-        BigDecimal boxB = new BigDecimal(box);
-        BigDecimal searchB = new BigDecimal(search);
-        BigDecimal searchingBox = searchB.divide(boxB, 20, RoundingMode.HALF_UP);
-        int res = searchingBox.intValue();
-        double resD = searchingBox.doubleValue();
-        if(Double.compare(resD, Double.valueOf(res))!=0){
-            res= res+1;
-        }
-        BigDecimal finB = boxB.multiply(new BigDecimal(res));
-        result.setText(finB.setScale(4,RoundingMode.HALF_UP).toString());
-        setBoxInformation(res, 1);
-        results.add("В упаковке - " + box + "м2. S = " +
-                search + "м2. Итог: " + finB + "\n");
+        results.add("В упаковке - " + box + "м2. S = " + search + "м2. Итог: " +
+                calculator.calculateSquareByPack(box, search) + "\n");
     }
 
     private void setBackgroundEditText(int boxSq, int tilesInB,
@@ -187,37 +153,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         return true;
     }
 
-    private void setBoxInformation(int allTiles, int tilesInPack){
-        int boxCountInt = allTiles/tilesInPack;
-        boxCount.setText(Integer.toString(boxCountInt));
-        int tilesCountInt = allTiles%tilesInPack;
-        if (boxCountInt%100 >= 11 && boxCountInt%100 <= 19) {
-            packInfo.setText("УПАКОВОК");
-        } else {
-            if (boxCountInt%10 == 1){
-                packInfo.setText("УПАКОВКА");
-            } else if (boxCountInt%10 > 1 && boxCountInt%10 <= 4){
-                packInfo.setText("УПАКОВКИ");
-            } else if ((boxCountInt%10 > 4) ||
-                    boxCountInt%10 == 0){
-                packInfo.setText("УПАКОВОК");
-            }
-        }
-        tileCount.setText(Integer.toString(tilesCountInt));
-        if (tilesCountInt%100 >= 11 && tilesCountInt%100 <= 19) {
-            tilesInfo.setText("ШТУК");
-        } else {
-            if (tilesCountInt%10 == 1){
-                tilesInfo.setText("ШТУКА");
-            } else if (tilesCountInt%10 > 1 && tilesCountInt%10 <= 4){
-                tilesInfo.setText("ШТУКИ");
-            } else if ((tilesCountInt%10 > 4) ||
-                    tilesCountInt%10 == 0){
-                tilesInfo.setText("ШТУК");
-            }
-        }
-    }
-
     private void historyText(){
         StringBuilder history = new StringBuilder();
         if(!results.isEmpty()){
@@ -230,7 +165,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                     history.append(text);
                 }
             }
+            oldResults.setText("История: \n" + history);
         }
-        oldResults.setText("История: \n" + history);
     }
 }
