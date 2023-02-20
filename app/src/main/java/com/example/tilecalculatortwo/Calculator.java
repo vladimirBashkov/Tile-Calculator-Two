@@ -20,8 +20,7 @@ public class Calculator {
         this.tilesInfo = tilesInfo;
     }
 
-    public String calculateSquareByMeters(String box, String countTiles, String search){
-        int countTilesInt = Integer.parseInt(countTiles);
+    public String calculateSquareByMeters(String box, int countTiles, String search){
         BigDecimal boxB = new BigDecimal(box);
         BigDecimal countTilesB = new BigDecimal(countTiles);
         BigDecimal oneTile = boxB.divide(countTilesB, 20, RoundingMode.HALF_UP);
@@ -37,17 +36,16 @@ public class Calculator {
                 .setScale(4,RoundingMode.HALF_UP)
                 .stripTrailingZeros();
         result.setText(finB.toString());
-        if(res > 99999){
+        if(res/countTiles > 99999){
             setBoxInformation(100000, 1);
         } else {
             int resI = Integer.parseInt(Long.toString(res));
-            setBoxInformation(resI, 1);
+            setBoxInformation(resI, countTiles);
         }
         return finB.toString();
     }
 
-    public String calculateSquareByTiles(String box, String countTiles, String search){
-        int countTilesInt = Integer.parseInt(countTiles);
+    public String calculateSquareByTiles(String box, int countTiles, String search){
         BigDecimal boxB = new BigDecimal(box);
         BigDecimal countTilesB = new BigDecimal(countTiles);
         BigDecimal oneTile = boxB.divide(countTilesB, 20, RoundingMode.HALF_UP);
@@ -56,7 +54,7 @@ public class Calculator {
                 .setScale(4,RoundingMode.HALF_UP)
                 .stripTrailingZeros();
         result.setText(finB.toString());
-        setBoxInformation(searchingTiles, countTilesInt);
+        setBoxInformation(searchingTiles, countTiles);
         return finB.toString();
     }
 
@@ -91,7 +89,7 @@ public class Calculator {
             tilesInfo.setText("ШТУК");
             return;
         }
-        boxCount.setText(boxCountInt);
+        boxCount.setText(Integer.toString(boxCountInt));
         int tilesCountInt = allTiles%tilesInPack;
         if (boxCountInt%100 >= 11 && boxCountInt%100 <= 19) {
             packInfo.setText("УПАКОВОК");
@@ -104,7 +102,7 @@ public class Calculator {
                 packInfo.setText("УПАКОВОК");
             }
         }
-        tileCount.setText(tilesCountInt);
+        tileCount.setText(Integer.toString(tilesCountInt));
         if (tilesCountInt%100 >= 11 && tilesCountInt%100 <= 19) {
             tilesInfo.setText("ШТУК");
         } else {

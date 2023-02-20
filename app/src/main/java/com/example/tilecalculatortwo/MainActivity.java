@@ -84,7 +84,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             return;
         }
         String box = boxSquare.getText().toString();
-        String countTiles = tilesInBox.getText().toString();
+        int countTiles = Integer.parseInt(tilesInBox.getText().toString());
         String search = searchingSquad.getText().toString();
         searchingTiles.setText("");
         results.add("В упаковке - " + box + "м2 - " +
@@ -100,7 +100,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             return;
         }
         String box = boxSquare.getText().toString();
-        String countTiles = tilesInBox.getText().toString();
+        int countTiles = Integer.parseInt(tilesInBox.getText().toString());
         String search = searchingTiles.getText().toString();
         searchingSquad.setText("");
         results.add("В упаковке - " + box + "м2 - " +
@@ -139,6 +139,13 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                         "расчет невозможен", Toast.LENGTH_LONG).show();
             return false;
         }
+        int countT = Integer.parseInt(countTiles);
+        if (countT == 0){
+            Toast.makeText(getApplicationContext(), "В заводской пачке" +
+                    " не бывает 0 плиток!!!", Toast.LENGTH_LONG).show();
+            return false;
+        }
+
         return true;
     }
 
@@ -148,6 +155,12 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         if(box.isEmpty() || search.isEmpty()){
             Toast.makeText(getApplicationContext(), "Не все поля заполненны, " +
                     "расчет невозможен", Toast.LENGTH_LONG).show();
+            return false;
+        }
+        double boxCheck = Double.parseDouble(box);
+        if(Double.compare(boxCheck, 0D) == 0){
+            Toast.makeText(getApplicationContext(), "В заводской пачке" +
+                    " не бывает 0 м2!!!", Toast.LENGTH_LONG).show();
             return false;
         }
         return true;
