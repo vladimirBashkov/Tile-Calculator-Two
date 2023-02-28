@@ -23,9 +23,7 @@
         android:id="@+id/History"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="96dp"
-        android:layout_marginTop="80dp"
-        android:layout_marginEnd="96dp"
+        android:layout_marginTop="70dp"
         android:background="#6B7FF1"
         android:text="Прошлые результаты"
         app:layout_constraintEnd_toEndOf="parent"
@@ -37,14 +35,14 @@
         android:layout_width="150dp"
         android:layout_height="20dp"
         android:layout_marginStart="40dp"
-        android:layout_marginTop="16dp"
+        android:layout_marginTop="40dp"
         android:text="Площадь упаковки"
         android:textAlignment="center"
         android:textColor="@color/black"
         android:textSize="14sp"
         android:textStyle="bold"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toBottomOf="@+id/spTilesType" />
 
     <TextView
         android:id="@+id/Square"
@@ -89,9 +87,7 @@
         android:id="@+id/PackagingBox"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="110dp"
-        android:layout_marginTop="16dp"
-        android:layout_marginEnd="110dp"
+        android:layout_marginTop="8dp"
         android:text="Количество упаковок и штук"
         android:textAlignment="center"
         android:textColor="@android:color/holo_blue_dark"
@@ -106,7 +102,7 @@
         android:layout_width="120dp"
         android:layout_height="50dp"
         android:layout_marginStart="10dp"
-        android:layout_marginTop="16dp"
+        android:layout_marginTop="8dp"
         android:text="0"
         android:textAlignment="textEnd"
         android:textSize="34sp"
@@ -132,7 +128,7 @@
         android:layout_width="60dp"
         android:layout_height="50dp"
         android:layout_marginStart="8dp"
-        android:layout_marginTop="16dp"
+        android:layout_marginTop="8dp"
         android:text="0"
         android:textAlignment="textEnd"
         android:textAllCaps="false"
@@ -176,14 +172,14 @@
         android:id="@+id/TileInBox"
         android:layout_width="130dp"
         android:layout_height="20dp"
-        android:layout_marginTop="16dp"
+        android:layout_marginTop="40dp"
         android:layout_marginEnd="40dp"
         android:text="Штук в упаковке"
         android:textAlignment="center"
         android:textColor="@color/black"
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toBottomOf="@+id/spTilesType" />
 
     <EditText
         android:id="@+id/BoxSquare"
@@ -282,5 +278,53 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/CalculateByM" />
+
+    <Spinner
+        android:id="@+id/spTilesType"
+        android:layout_width="350dp"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:spinnerMode="dropdown"
+        android:textAlignment="center"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <Spinner
+        android:id="@+id/CersanitSp"
+        android:layout_width="350dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:gravity="center"
+        android:textAlignment="center"
+        android:visibility="invisible"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/spTilesType" />
+
+    <Spinner
+        android:id="@+id/GlobalTileSp"
+        android:layout_width="350dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:gravity="center"
+        android:textAlignment="center"
+        android:visibility="invisible"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/spTilesType" />
+
+    <Spinner
+        android:id="@+id/AlmaCeramicaSp"
+        android:layout_width="350dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:dropDownWidth="wrap_content"
+        android:gravity="center"
+        android:textAlignment="center"
+        android:visibility="invisible"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/spTilesType" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

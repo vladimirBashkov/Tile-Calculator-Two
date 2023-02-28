@@ -62,7 +62,7 @@ public class Calculator {
         BigDecimal boxB = new BigDecimal(box);
         BigDecimal searchB = new BigDecimal(search);
         BigDecimal searchingBox = searchB.divide(boxB, 20, RoundingMode.HALF_UP);
-        long res = searchingBox.intValue();
+        long res = searchingBox.longValue();
         double resD = searchingBox.doubleValue();
         if(Double.compare(resD, Double.valueOf(res))!=0){
             res= res+1;

@@ -1,0 +1,5 @@
+Alma Ceramica	57*57 (1.6245)	-	1.6245	-	5
+Alma Ceramica	20*90 (1.26)	-	1.26	-	7
+Alma Ceramica	24,9*36,4 (1.36)	-	1.36	-	15
+Alma Ceramica	24,9*50 (1.494)	-	1.494	-	12
+Alma Ceramica	41,8*41,8 (1,747)	-	1.747	-	10
