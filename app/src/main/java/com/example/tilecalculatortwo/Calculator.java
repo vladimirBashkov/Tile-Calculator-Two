@@ -1,5 +1,6 @@
 package com.example.tilecalculatortwo;
 
+import android.widget.EditText;
 import android.widget.TextView;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
@@ -20,7 +21,7 @@ public class Calculator {
         this.tilesInfo = tilesInfo;
     }
 
-    public String calculateSquareByMeters(String box, int countTiles, String search){
+    public String calculateSquareByMeters(String box, int countTiles, String search, EditText searchingTiles){
         BigDecimal boxB = new BigDecimal(box);
         BigDecimal countTilesB = new BigDecimal(countTiles);
         BigDecimal oneTile = boxB.divide(countTilesB, 20, RoundingMode.HALF_UP);
@@ -32,6 +33,7 @@ public class Calculator {
         if(Double.compare(resD, Double.valueOf(res))!=0){
             res= res+1;
         }
+        searchingTiles.setText(Long.toString(res));
         BigDecimal finB = oneTile.multiply(new BigDecimal(res))
                 .setScale(4,RoundingMode.HALF_UP)
                 .stripTrailingZeros();

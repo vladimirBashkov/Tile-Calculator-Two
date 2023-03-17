@@ -8,7 +8,6 @@ import android.Manifest;
 import android.app.Activity;
 import android.content.Intent;
 import android.content.pm.PackageManager;
-import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
@@ -28,9 +27,10 @@ import java.util.TreeMap;
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
     private static final int READ_REQUEST_CODE = 42;
     private static final String FILE_NAME = "tilestype.txt";
-    String separator = "~";
+    String SEPARATOR = "~";
     private Calculator calculator;
     private TreeMap<Integer, String> tilesMap = new TreeMap<Integer, String>();
+    private FillingData fillingData;
     private Button searchFromTreeMap;
     private Button calculateByM;
     private Button calculateByTiles;
@@ -74,6 +74,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         tilesInfo = findViewById(R.id.TilesInfo);
         calculateByM.setOnClickListener(this);
         calculator = new Calculator(result, boxCount, tileCount, packInfo, tilesInfo);
+        fillingData = new FillingData(MainActivity.this, tilesMap, calculator,
+                searchingArticle, searchingSquad,searchingTiles, infoAboutTile, boxSquare, tilesInBox, SEPARATOR);
         readTilesType();
         searchFromTreeMap.setOnClickListener(this);
         calculateByTiles.setOnClickListener(this);
@@ -85,16 +87,16 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     @Override
     public void onClick(View view) {
         if(view.getId() == R.id.SearchFromTreeMap){
-            searchFromMap();
+            fillingData.searchFromMap();
         }
         if(view.getId() == R.id.CalculateByM){
-            calculateSquareByM();
+            fillingData.calculateSquareByM();
         }
         if(view.getId() == R.id.CalculateByPieces){
-            calculateSquareByTiles();
+            fillingData.calculateSquareByPieces();
         }
         if(view.getId() == R.id.CalculateByPack){
-            calculateSquareByPack();
+            fillingData.calculateSquareByPack();
         }
         if(view.getId() == R.id.DownloadButton){
            readFile();
@@ -105,6 +107,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         File file = new File(getApplicationContext().getFilesDir(),FILE_NAME);
         if(file.exists()){
             writeTilesInfoToMap(openText());
+            fillingData.setTilesMap(tilesMap);
         } else {
             Toast.makeText(this, "Файла не существует", Toast.LENGTH_SHORT).show();
         }
@@ -132,126 +135,18 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         return "";
     }
 
-    private void searchFromMap() {
-        String article = searchingArticle.getText().toString().trim();
-        if(article.length() == 8){
-            int art = Integer.parseInt(article);
-            if(tilesMap.containsKey(art)){
-                String info = tilesMap.get(art);
-                setTileInfo(info);
-            } else {
-                Toast.makeText(this, "Такого артикула нет в файле", Toast.LENGTH_SHORT).show();
-            }
-        }
-    }
-
-
     private void writeTilesInfoToMap(String value){
         String[] tilesInfo = value.split("\n");
         for (int i = 0; i < tilesInfo.length; i++) {
-            if(tilesInfo[i].contains(separator)){
-                String[] tilesInfoString = tilesInfo[i].split(separator);
+            if(tilesInfo[i].contains(SEPARATOR)){
+                String[] tilesInfoString = tilesInfo[i].split(SEPARATOR);
                 int article = Integer.parseInt(tilesInfoString[0].trim());
-                String tileInfo = tilesInfoString[1].trim() + separator +
+                String tileInfo = tilesInfoString[1].trim() + SEPARATOR +
                         tilesInfoString[2].trim().replace(",", ".") +
-                        separator + tilesInfoString[3].trim();
+                        SEPARATOR + tilesInfoString[3].trim();
                 tilesMap.put(article, tileInfo);
             }
         }
-    }
-
-    private void setTileInfo(String tileInfo){
-        String[] splitInfo = tileInfo.split(separator);
-        String tileName = splitInfo[0];
-        infoAboutTile.setText(tileName);
-        String tilesVolume = splitInfo[1];
-        String tilesCount = splitInfo[2];
-        boxSquare.setText(tilesVolume);
-        tilesInBox.setText(tilesCount);
-    }
-
-    private void calculateSquareByM(){
-        int buttonColor = Color.parseColor("#75EC7A");
-        setBackgroundEditText(buttonColor,
-                buttonColor, buttonColor,0);
-        if(!checkData(searchingSquad)){
-            return;
-        }
-        String box = boxSquare.getText().toString();
-        int countTiles = Integer.parseInt(tilesInBox.getText().toString());
-        String search = searchingSquad.getText().toString();
-        searchingTiles.setText("");
-        calculator.calculateSquareByMeters(box, countTiles, search);
-    }
-
-    private void calculateSquareByTiles(){
-        int buttonColor = Color.parseColor("#FBEB59");
-        setBackgroundEditText(buttonColor, buttonColor,
-                0,buttonColor);
-        if(!checkData(searchingTiles)){
-            return;
-        }
-        String box = boxSquare.getText().toString();
-        int countTiles = Integer.parseInt(tilesInBox.getText().toString());
-        String search = searchingTiles.getText().toString();
-        searchingSquad.setText("");
-        calculator.calculateSquareByTiles(box, countTiles, search);
-    }
-
-    private void calculateSquareByPack(){
-        int buttonColor = Color.parseColor("#79B9EC");
-        setBackgroundEditText(buttonColor, 0,
-                buttonColor,0);
-        if(!checkBoxAndSquare(searchingSquad)){
-            return;
-        }
-        String box = boxSquare.getText().toString();
-        String search = searchingSquad.getText().toString();
-        searchingTiles.setText("");
-        calculator.calculateSquareByPack(box, search);
-    }
-
-    private void setBackgroundEditText(int boxSq, int tilesInB,
-                                       int searchingSq, int searchingTi){
-        boxSquare.setBackgroundColor(boxSq);
-        tilesInBox.setBackgroundColor(tilesInB);
-        searchingSquad.setBackgroundColor(searchingSq);
-        searchingTiles.setBackgroundColor(searchingTi);
-    }
-
-    private boolean checkData(EditText editText){
-        String countTiles = tilesInBox.getText().toString();
-        if(!checkBoxAndSquare(editText)){
-            return false;
-        } else if(countTiles.isEmpty()){
-            Toast.makeText(getApplicationContext(), "Не все поля заполненны, " +
-                        "расчет невозможен", Toast.LENGTH_LONG).show();
-            return false;
-        }
-        int countT = Integer.parseInt(countTiles);
-        if (countT == 0){
-            Toast.makeText(getApplicationContext(), "В заводской пачке" +
-                    " не бывает 0 плиток!!!", Toast.LENGTH_LONG).show();
-            return false;
-        }
-        return true;
-    }
-
-    private boolean checkBoxAndSquare(EditText editText){
-        String box = boxSquare.getText().toString();
-        String search = editText.getText().toString();
-        if(box.isEmpty() || search.isEmpty()){
-            Toast.makeText(getApplicationContext(), "Не все поля заполненны, " +
-                    "расчет невозможен", Toast.LENGTH_LONG).show();
-            return false;
-        }
-        double boxCheck = Double.parseDouble(box);
-        if(Double.compare(boxCheck, 0D) == 0){
-            Toast.makeText(getApplicationContext(), "В заводской пачке" +
-                    " не бывает 0 м2!!!", Toast.LENGTH_LONG).show();
-            return false;
-        }
-        return true;
     }
 
     public void readFile(){
