@@ -11,8 +11,10 @@ import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 import java.io.BufferedReader;
@@ -77,11 +79,13 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         fillingData = new FillingData(MainActivity.this, tilesMap, calculator,
                 searchingArticle, searchingSquad,searchingTiles, infoAboutTile, boxSquare, tilesInBox, SEPARATOR);
         readTilesType();
+
         searchFromTreeMap.setOnClickListener(this);
         calculateByTiles.setOnClickListener(this);
         calculateByM.setOnClickListener(this);
         calculateByPack.setOnClickListener(this);
         download.setOnClickListener(this);
+
     }
 
     @Override

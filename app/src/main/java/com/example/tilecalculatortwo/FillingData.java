@@ -37,6 +37,12 @@ public class FillingData extends Activity {
         this.boxSquare = boxSquare;
         this.tilesInBox = tilesInBox;
         this.SEPARATOR = SEPARATOR;
+
+        //        ArrayAdapter<String> tilesTypeAdapter = new ArrayAdapter<>(this,
+//                android.R.layout.simple_spinner_item, tilesType);
+//        tilesTypeAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+//        spinner = (Spinner) findViewById(R.id.spTilesType);
+//        spinner.setAdapter(tilesTypeAdapter);
     }
 
     public void searchFromMap() {

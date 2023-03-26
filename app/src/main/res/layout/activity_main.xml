@@ -24,7 +24,7 @@
         android:layout_width="150dp"
         android:layout_height="20dp"
         android:layout_marginStart="40dp"
-        android:layout_marginTop="16dp"
+        android:layout_marginTop="5dp"
         android:text="Площадь упаковки"
         android:textAlignment="center"
         android:textColor="@color/black"
@@ -38,7 +38,7 @@
         android:layout_width="150dp"
         android:layout_height="20dp"
         android:layout_marginStart="40dp"
-        android:layout_marginTop="16dp"
+        android:layout_marginTop="5dp"
         android:text="Нужно m2"
         android:textAlignment="center"
         android:textColor="@color/black"
@@ -143,7 +143,7 @@
         android:id="@+id/TileInBox"
         android:layout_width="130dp"
         android:layout_height="20dp"
-        android:layout_marginTop="16dp"
+        android:layout_marginTop="5dp"
         android:layout_marginEnd="40dp"
         android:text="Штук в упаковке"
         android:textAlignment="center"
@@ -157,7 +157,7 @@
         android:layout_width="150dp"
         android:layout_height="50dp"
         android:layout_marginStart="40dp"
-        android:layout_marginTop="16dp"
+        android:layout_marginTop="5dp"
         android:ems="10"
         android:inputType="numberDecimal"
         android:maxLength="7"
@@ -171,7 +171,7 @@
         android:id="@+id/TilesInBox"
         android:layout_width="130dp"
         android:layout_height="50dp"
-        android:layout_marginTop="16dp"
+        android:layout_marginTop="5dp"
         android:layout_marginEnd="40dp"
         android:ems="10"
         android:inputType="number"
@@ -201,7 +201,7 @@
         android:id="@+id/textView"
         android:layout_width="130dp"
         android:layout_height="20dp"
-        android:layout_marginTop="16dp"
+        android:layout_marginTop="5dp"
         android:layout_marginEnd="40dp"
         android:text="Нужно штук"
         android:textAlignment="center"
@@ -278,23 +278,54 @@
         android:id="@+id/InfoAboutTile"
         android:layout_width="350dp"
         android:layout_height="50dp"
-        android:layout_marginTop="16dp"
+        android:layout_marginTop="8dp"
         android:textAlignment="center"
         android:textColor="@color/black"
         android:textSize="14sp"
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/SearchingArticle" />
+        app:layout_constraintTop_toBottomOf="@+id/SearchingText" />
 
     <Button
         android:id="@+id/DownloadButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
+        android:layout_marginTop="8dp"
         android:text="Загрузить данные"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/PackInfo" />
+
+    <Spinner
+        android:id="@+id/SelectedSpinner"
+        android:layout_width="350dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/SearchingText" />
+
+    <EditText
+        android:id="@+id/SearchingText"
+        android:layout_width="200dp"
+        android:layout_height="50dp"
+        android:layout_marginStart="40dp"
+        android:layout_marginTop="8dp"
+        android:ems="10"
+        android:inputType="textPersonName"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/SearchingArticle" />
+
+    <Button
+        android:id="@+id/SearchByName"
+        android:layout_width="100dp"
+        android:layout_height="50dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="40dp"
+        android:text="Поиск по названию"
+        android:textSize="10sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/SearchFromTreeMap" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
