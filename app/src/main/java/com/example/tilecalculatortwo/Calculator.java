@@ -4,6 +4,7 @@ import android.widget.EditText;
 import android.widget.TextView;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
+import java.util.ArrayList;
 
 public class Calculator {
     TextView result;
@@ -11,6 +12,7 @@ public class Calculator {
     TextView tileCount;
     TextView packInfo;
     TextView tilesInfo;
+    ArrayList<String> history = new ArrayList<>();
 
     Calculator(TextView result, TextView boxCount, TextView tileCount,
                TextView packInfo, TextView tilesInfo){
@@ -38,6 +40,10 @@ public class Calculator {
                 .setScale(4,RoundingMode.HALF_UP)
                 .stripTrailingZeros();
         result.setText(finB.toString());
+        int boxResult = Integer.parseInt(Long.toString(res))/countTiles;
+        int tiles = Integer.parseInt(Long.toString(res))%countTiles;
+        history.add("Для " + search + " м2., необходимо " + finB +
+                " м2. Это " + boxResult + " уп. " + tiles + " шт.");
         if(res/countTiles > 99999){
             setBoxInformation(100000, 1);
         } else {
@@ -57,6 +63,10 @@ public class Calculator {
                 .stripTrailingZeros();
         result.setText(finB.toString());
         setBoxInformation(searchingTiles, countTiles);
+        int boxResult = searchingTiles/countTiles;
+        int tiles = searchingTiles%countTiles;
+        history.add("Для " + search + " шт., необходимо " + finB +
+                " м2. Это " + boxResult + " уп. " + tiles + " шт.");
         return finB.toString();
     }
 
@@ -73,6 +83,8 @@ public class Calculator {
                 .setScale(4,RoundingMode.HALF_UP)
                 .stripTrailingZeros();
         result.setText(finB.toString());
+        history.add("Для " + search + " кратно пачкам, необходимо " + finB +
+                " м2. Это " + res + " уп.");
         if(res > 99999){
             setBoxInformation(100000, 1);
         } else {
@@ -116,5 +128,9 @@ public class Calculator {
                 tilesInfo.setText("ШТУК");
             }
         }
+    }
+
+    public ArrayList<String> getHistory() {
+        return history;
     }
 }

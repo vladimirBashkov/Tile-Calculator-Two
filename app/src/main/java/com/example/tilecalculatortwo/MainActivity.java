@@ -5,13 +5,13 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 
 import android.Manifest;
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
@@ -34,11 +34,14 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private TreeMap<Integer, String> tilesMap = new TreeMap<Integer, String>();
     private FillingData fillingData;
     private Button searchFromTreeMap;
+    private Button searchByName;
     private Button calculateByM;
     private Button calculateByTiles;
     private Button calculateByPack;
     private Button download;
+    private Button showHistory;
     private EditText searchingArticle;
+    private EditText searchingText;
     private EditText boxSquare;
     private EditText tilesInBox;
     private EditText searchingSquad;
@@ -46,10 +49,12 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private TextView infoAboutTile;
     private TextView result;
     private TextView packInfo;
-    private TextView tilesInfo;
+    private TextView tilesInfoName;
     private TextView boxCount;
     private TextView tileCount;
+    private Spinner selectedSpinner;
 
+    @SuppressLint("MissingInflatedId")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -59,11 +64,14 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                         Manifest.permission.READ_EXTERNAL_STORAGE},
                 PackageManager.PERMISSION_GRANTED);
         searchFromTreeMap = findViewById(R.id.SearchFromTreeMap);
+        searchByName = findViewById(R.id.SearchByName);
         calculateByM = findViewById(R.id.CalculateByM);
         calculateByTiles = findViewById(R.id.CalculateByPieces);
         calculateByPack = findViewById(R.id.CalculateByPack);
         download = findViewById(R.id.DownloadButton);
+        showHistory = findViewById(R.id.ShowHistory);
         searchingArticle = findViewById(R.id.SearchingArticle);
+        searchingText = findViewById(R.id.SearchingText);
         boxSquare = findViewById(R.id.BoxSquare);
         tilesInBox = findViewById(R.id.TilesInBox);
         searchingSquad = findViewById(R.id.SearchingSquare);
@@ -73,25 +81,37 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         boxCount = findViewById(R.id.BoxCount);
         packInfo = findViewById(R.id.PackInfo);
         tileCount = findViewById(R.id.TileCount);
-        tilesInfo = findViewById(R.id.TilesInfo);
-        calculateByM.setOnClickListener(this);
-        calculator = new Calculator(result, boxCount, tileCount, packInfo, tilesInfo);
+        tilesInfoName = findViewById(R.id.TilesInfoName);
+        selectedSpinner = findViewById(R.id.SelectedSpinner);
+        TextView tileSquare = findViewById(R.id.TileSquare);
+        TextView packagingBox = findViewById(R.id.PackagingBox);
+        TextView history = findViewById(R.id.History);
+        calculator = new Calculator(result, boxCount, tileCount,
+                packInfo, tilesInfoName);
         fillingData = new FillingData(MainActivity.this, tilesMap, calculator,
-                searchingArticle, searchingSquad,searchingTiles, infoAboutTile, boxSquare, tilesInBox, SEPARATOR);
+                searchingArticle, searchingSquad,searchingTiles, infoAboutTile,
+                boxSquare, tilesInBox, SEPARATOR, searchingText, selectedSpinner,
+                tileSquare, result, packagingBox, boxCount, packInfo,
+                tileCount, tilesInfoName, history);
+
         readTilesType();
 
         searchFromTreeMap.setOnClickListener(this);
+        searchByName.setOnClickListener(this);
         calculateByTiles.setOnClickListener(this);
         calculateByM.setOnClickListener(this);
         calculateByPack.setOnClickListener(this);
         download.setOnClickListener(this);
-
+        showHistory.setOnClickListener(this);
     }
 
     @Override
     public void onClick(View view) {
         if(view.getId() == R.id.SearchFromTreeMap){
             fillingData.searchFromMap();
+        }
+        if(view.getId() == R.id.SearchByName){
+            fillingData.searchByName();
         }
         if(view.getId() == R.id.CalculateByM){
             fillingData.calculateSquareByM();
@@ -105,6 +125,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         if(view.getId() == R.id.DownloadButton){
            readFile();
         }
+        if(view.getId() == R.id.ShowHistory){
+            fillingData.showHistory();
+        }
     }
 
     private void readTilesType(){
@@ -113,7 +136,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             writeTilesInfoToMap(openText());
             fillingData.setTilesMap(tilesMap);
         } else {
-            Toast.makeText(this, "Файла не существует", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "Нет файла для чтения данных", Toast.LENGTH_SHORT).show();
         }
     }
 
