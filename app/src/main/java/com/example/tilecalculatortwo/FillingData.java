@@ -108,6 +108,7 @@ public class FillingData extends Activity {
                     @Override
                     public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
                         try {
+                            setInfoAboutTile(selectedString.get(i));
                             String[] info = tilesInfo.get(i).split(SEPARATOR);
                             String boxVolume = info[0];
                             String tilesCount = info[1];
@@ -173,10 +174,14 @@ public class FillingData extends Activity {
     private void setTileInfo(String tileInfo){
         String[] splitInfo = tileInfo.split(SEPARATOR);
         String tileName = splitInfo[0];
-        infoAboutTile.setText(tileName);
+        setInfoAboutTile(tileName);
         String boxVolume = splitInfo[1];
         String tilesCount = splitInfo[2];
         setBoxSquareAndTilesInBox(boxVolume, tilesCount);
+    }
+
+    private void setInfoAboutTile(String name){
+        infoAboutTile.setText(name);
     }
 
     public void setBoxSquareAndTilesInBox(String boxVolume, String tilesCount){

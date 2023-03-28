@@ -2,6 +2,7 @@ package com.example.tilecalculatortwo;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.app.AppCompatDelegate;
 import androidx.core.app.ActivityCompat;
 
 import android.Manifest;
@@ -87,7 +88,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         TextView packagingBox = findViewById(R.id.PackagingBox);
         TextView history = findViewById(R.id.History);
         calculator = new Calculator(result, boxCount, tileCount,
-                packInfo, tilesInfoName);
+                packInfo, tilesInfoName, infoAboutTile);
         fillingData = new FillingData(MainActivity.this, tilesMap, calculator,
                 searchingArticle, searchingSquad,searchingTiles, infoAboutTile,
                 boxSquare, tilesInBox, SEPARATOR, searchingText, selectedSpinner,
