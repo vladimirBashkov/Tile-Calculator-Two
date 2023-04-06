@@ -7,12 +7,13 @@ import java.math.RoundingMode;
 import java.util.ArrayList;
 
 public class Calculator {
-    TextView result;
-    TextView boxCount;
-    TextView tileCount;
-    TextView packInfo;
-    TextView tilesInfo;
-    TextView infoAboutTile;
+    Integer SCALE = 6;
+    private final TextView result;
+    private final TextView boxCount;
+    private final TextView tileCount;
+    private final TextView packInfo;
+    private final TextView tilesInfo;
+    private final TextView infoAboutTile;
     ArrayList<String> history = new ArrayList<>();
 
     Calculator(TextView result, TextView boxCount, TextView tileCount,
@@ -25,7 +26,7 @@ public class Calculator {
         this.infoAboutTile = infoAboutTile;
     }
 
-    public String calculateSquareByMeters(String box, int countTiles, String search, EditText searchingTiles){
+    public void calculateSquareByMeters(String box, int countTiles, String search, EditText searchingTiles){
         BigDecimal boxB = new BigDecimal(box);
         BigDecimal countTilesB = new BigDecimal(countTiles);
         BigDecimal oneTile = boxB.divide(countTilesB, 20, RoundingMode.HALF_UP);
@@ -34,12 +35,12 @@ public class Calculator {
                 .longValue();
         double resD = searchB.divide(oneTile, 20, RoundingMode.HALF_UP)
                 .doubleValue();
-        if(Double.compare(resD, Double.valueOf(res))!=0){
+        if(Double.compare(resD, res)!=0){
             res= res+1;
         }
         searchingTiles.setText(Long.toString(res));
         BigDecimal finB = oneTile.multiply(new BigDecimal(res))
-                .setScale(4,RoundingMode.HALF_UP)
+                .setScale(SCALE,RoundingMode.HALF_UP)
                 .stripTrailingZeros();
         result.setText(finB.toString());
         int boxResult = Integer.parseInt(Long.toString(res))/countTiles;
@@ -53,16 +54,15 @@ public class Calculator {
             int resI = Integer.parseInt(Long.toString(res));
             setBoxInformation(resI, countTiles);
         }
-        return finB.toString();
     }
 
-    public String calculateSquareByTiles(String box, int countTiles, String search){
+    public void calculateSquareByTiles(String box, int countTiles, String search){
         BigDecimal boxB = new BigDecimal(box);
         BigDecimal countTilesB = new BigDecimal(countTiles);
         BigDecimal oneTile = boxB.divide(countTilesB, 20, RoundingMode.HALF_UP);
         int searchingTiles = Integer.parseInt(search);
         BigDecimal finB = oneTile.multiply(new BigDecimal(searchingTiles))
-                .setScale(4,RoundingMode.HALF_UP)
+                .setScale(SCALE,RoundingMode.HALF_UP)
                 .stripTrailingZeros();
         result.setText(finB.toString());
         setBoxInformation(searchingTiles, countTiles);
@@ -71,20 +71,19 @@ public class Calculator {
         String name = infoAboutTile.getText().toString();
         history.add(name + ". Для " + search + " шт., необходимо " + finB +
                 " м2. Это " + boxResult + " уп. " + tiles + " шт.");
-        return finB.toString();
     }
 
-    public String calculateSquareByPack(String box, String search){
+    public void calculateSquareByPack(String box, String search){
         BigDecimal boxB = new BigDecimal(box);
         BigDecimal searchB = new BigDecimal(search);
         BigDecimal searchingBox = searchB.divide(boxB, 20, RoundingMode.HALF_UP);
         long res = searchingBox.longValue();
         double resD = searchingBox.doubleValue();
-        if(Double.compare(resD, Double.valueOf(res))!=0){
+        if(Double.compare(resD, res)!=0){
             res= res+1;
         }
         BigDecimal finB = boxB.multiply(new BigDecimal(res))
-                .setScale(4,RoundingMode.HALF_UP)
+                .setScale(SCALE,RoundingMode.HALF_UP)
                 .stripTrailingZeros();
         result.setText(finB.toString());
         String name = infoAboutTile.getText().toString();
@@ -96,7 +95,6 @@ public class Calculator {
             int resI = Integer.parseInt(Long.toString(res));
             setBoxInformation(resI, 1);
         }
-        return finB.toString();
     }
 
     private void setBoxInformation(int allTiles, int tilesInPack){

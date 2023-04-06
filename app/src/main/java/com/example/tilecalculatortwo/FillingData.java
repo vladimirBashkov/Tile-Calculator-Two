@@ -11,31 +11,33 @@ import android.widget.TextView;
 import android.widget.Toast;
 import java.util.ArrayList;
 import java.util.TreeMap;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class FillingData extends Activity {
-    String BUTTON_COLOR_CALCULATE_BY_M = "#75EC7A";
-    String BUTTON_COLOR_CALCULATE_BY_PIECES = "#FBEB59";
-    String BUTTON_COLOR_CALCULATE_BY_PACK = "#79B9EC";
-    String SEPARATOR;
-    Activity activity;
+    private static final String BUTTON_COLOR_CALCULATE_BY_M = "#8BC34A";
+    private static final String BUTTON_COLOR_CALCULATE_BY_PIECES = "#FFEB3B";
+    private static final String BUTTON_COLOR_CALCULATE_BY_PACK = "#999EFF";
+    private final String SEPARATOR;
+    private final Activity activity;
     private TreeMap<Integer, String> tilesMap;
-    private EditText searchingArticle;
-    private EditText searchingSquad;
-    private EditText searchingTiles;
-    private Calculator calculator;
-    private TextView infoAboutTile;
-    private EditText boxSquare;
-    private EditText tilesInBox;
-    private EditText searchingText;
-    private Spinner selectedSpinner;
-    private TextView tileSquare;
-    private TextView result;
-    private TextView packagingBox;
-    private TextView boxCount;
-    private TextView packInfo;
-    private TextView tileCount;
-    private TextView tilesInfoName;
-    private TextView history;
+    private final Spinner selectedSpinner;
+    private final EditText searchingArticle;
+    private final EditText searchingSquad;
+    private final EditText searchingTiles;
+    private final Calculator calculator;
+    private final TextView infoAboutTile;
+    private final EditText boxSquare;
+    private final EditText tilesInBox;
+    private final EditText searchingText;
+    private final TextView tileSquare;
+    private final TextView result;
+    private final TextView packagingBox;
+    private final TextView boxCount;
+    private final TextView packInfo;
+    private final TextView tileCount;
+    private final TextView tilesInfoName;
+    private final TextView history;
 
 
     public FillingData(Activity activity, TreeMap<Integer, String> tilesMap,
@@ -87,11 +89,14 @@ public class FillingData extends Activity {
 
     public void searchByName(){
         String name = searchingText.getText().toString();
-        if(name.length() > 0){
+        int nameLength = name.length();
+        if(nameLength > 0){
             ArrayList<String> selectedString = new ArrayList<>();
             ArrayList<String> tilesInfo = new ArrayList<>();
             tilesMap.values().forEach(text ->{
-                if(text.contains(name)){
+                Pattern pattern = Pattern.compile(name, Pattern.CASE_INSENSITIVE);
+                Matcher matcher = pattern.matcher(text);
+                if(matcher.find()){
                     String[] info = text.split(SEPARATOR);
                     selectedString.add(info[0]);
                     tilesInfo.add(info[1] + SEPARATOR + info[2]);
@@ -135,11 +140,13 @@ public class FillingData extends Activity {
             StringBuilder sb = new StringBuilder();
             if(historyList.size() > 5){
                 for (int i = historyList.size()-1; i >= historyList.size()-5 ; i--) {
-                    sb.append(historyList.get(i) + "\n");
+                    sb.append(historyList.get(i));
+                    sb.append("\n");
                 }
             } else {
                 for (int i = historyList.size()-1; i >= 0; i--) {
-                    sb.append(historyList.get(i) + "\n");
+                    sb.append(historyList.get(i));
+                    sb.append("\n");
                 }
             }
             history.setText(sb);

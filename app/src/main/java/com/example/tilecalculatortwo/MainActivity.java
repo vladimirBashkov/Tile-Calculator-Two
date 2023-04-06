@@ -2,9 +2,7 @@ package com.example.tilecalculatortwo;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.app.AppCompatDelegate;
 import androidx.core.app.ActivityCompat;
-
 import android.Manifest;
 import android.annotation.SuppressLint;
 import android.app.Activity;
@@ -30,30 +28,10 @@ import java.util.TreeMap;
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
     private static final int READ_REQUEST_CODE = 42;
     private static final String FILE_NAME = "tilestype.txt";
+    private static final String LOGS_FILE = "TCTLogs.txt";
     String SEPARATOR = "~";
-    private Calculator calculator;
-    private TreeMap<Integer, String> tilesMap = new TreeMap<Integer, String>();
+    private TreeMap<Integer, String> tilesMap = new TreeMap<>();
     private FillingData fillingData;
-    private Button searchFromTreeMap;
-    private Button searchByName;
-    private Button calculateByM;
-    private Button calculateByTiles;
-    private Button calculateByPack;
-    private Button download;
-    private Button showHistory;
-    private EditText searchingArticle;
-    private EditText searchingText;
-    private EditText boxSquare;
-    private EditText tilesInBox;
-    private EditText searchingSquad;
-    private EditText searchingTiles;
-    private TextView infoAboutTile;
-    private TextView result;
-    private TextView packInfo;
-    private TextView tilesInfoName;
-    private TextView boxCount;
-    private TextView tileCount;
-    private Spinner selectedSpinner;
 
     @SuppressLint("MissingInflatedId")
     @Override
@@ -64,31 +42,33 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE,
                         Manifest.permission.READ_EXTERNAL_STORAGE},
                 PackageManager.PERMISSION_GRANTED);
-        searchFromTreeMap = findViewById(R.id.SearchFromTreeMap);
-        searchByName = findViewById(R.id.SearchByName);
-        calculateByM = findViewById(R.id.CalculateByM);
-        calculateByTiles = findViewById(R.id.CalculateByPieces);
-        calculateByPack = findViewById(R.id.CalculateByPack);
-        download = findViewById(R.id.DownloadButton);
-        showHistory = findViewById(R.id.ShowHistory);
-        searchingArticle = findViewById(R.id.SearchingArticle);
-        searchingText = findViewById(R.id.SearchingText);
-        boxSquare = findViewById(R.id.BoxSquare);
-        tilesInBox = findViewById(R.id.TilesInBox);
-        searchingSquad = findViewById(R.id.SearchingSquare);
-        searchingTiles = findViewById(R.id.SearchingTiles);
-        infoAboutTile = findViewById(R.id.InfoAboutTile);
-        result = findViewById(R.id.Result);
-        boxCount = findViewById(R.id.BoxCount);
-        packInfo = findViewById(R.id.PackInfo);
-        tileCount = findViewById(R.id.TileCount);
-        tilesInfoName = findViewById(R.id.TilesInfoName);
-        selectedSpinner = findViewById(R.id.SelectedSpinner);
+        Button searchFromTreeMap = findViewById(R.id.SearchFromTreeMap);
+        Button searchByName = findViewById(R.id.SearchByName);
+        Button calculateByM = findViewById(R.id.CalculateByM);
+        Button calculateByTiles = findViewById(R.id.CalculateByPieces);
+        Button calculateByPack = findViewById(R.id.CalculateByPack);
+        Button download = findViewById(R.id.DownloadButton);
+        Button showHistory = findViewById(R.id.ShowHistory);
+        EditText searchingArticle = findViewById(R.id.SearchingArticle);
+        EditText searchingText = findViewById(R.id.SearchingText);
+        EditText boxSquare = findViewById(R.id.BoxSquare);
+        EditText tilesInBox = findViewById(R.id.TilesInBox);
+        EditText searchingSquad = findViewById(R.id.SearchingSquare);
+        EditText searchingTiles = findViewById(R.id.SearchingTiles);
+        TextView infoAboutTile = findViewById(R.id.InfoAboutTile);
+        TextView result = findViewById(R.id.Result);
+        TextView boxCount = findViewById(R.id.BoxCount);
+        TextView packInfo = findViewById(R.id.PackInfo);
+        TextView tileCount = findViewById(R.id.TileCount);
+        TextView tilesInfoName = findViewById(R.id.TilesInfoName);
+        Spinner selectedSpinner = findViewById(R.id.SelectedSpinner);
         TextView tileSquare = findViewById(R.id.TileSquare);
         TextView packagingBox = findViewById(R.id.PackagingBox);
         TextView history = findViewById(R.id.History);
-        calculator = new Calculator(result, boxCount, tileCount,
+
+        Calculator calculator = new Calculator(result, boxCount, tileCount,
                 packInfo, tilesInfoName, infoAboutTile);
+
         fillingData = new FillingData(MainActivity.this, tilesMap, calculator,
                 searchingArticle, searchingSquad,searchingTiles, infoAboutTile,
                 boxSquare, tilesInBox, SEPARATOR, searchingText, selectedSpinner,
@@ -135,21 +115,20 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         File file = new File(getApplicationContext().getFilesDir(),FILE_NAME);
         if(file.exists()){
             writeTilesInfoToMap(openText());
-            fillingData.setTilesMap(tilesMap);
         } else {
             Toast.makeText(this, "Нет файла для чтения данных", Toast.LENGTH_SHORT).show();
         }
     }
 
-    public String openText(){
+    private String openText(){
         FileInputStream fin = null;
         try {
             fin = openFileInput(FILE_NAME);
             byte[] bytes = new byte[fin.available()];
             fin.read(bytes);
-            String text = new String (bytes);
-            return text;
+            return new String (bytes);
         } catch(IOException ex) {
+            writeLog(ex.getMessage());
             Toast.makeText(this, ex.getMessage(), Toast.LENGTH_SHORT).show();
         } finally{
             try{
@@ -165,19 +144,30 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     private void writeTilesInfoToMap(String value){
         String[] tilesInfo = value.split("\n");
-        for (int i = 0; i < tilesInfo.length; i++) {
-            if(tilesInfo[i].contains(SEPARATOR)){
-                String[] tilesInfoString = tilesInfo[i].split(SEPARATOR);
+        int newStrings = 0;
+        boolean mapIsEmpty = tilesMap.isEmpty();
+        for (String s : tilesInfo) {
+            if (s.contains(SEPARATOR)) {
+                String[] tilesInfoString = s.split(SEPARATOR);
                 int article = Integer.parseInt(tilesInfoString[0].trim());
                 String tileInfo = tilesInfoString[1].trim() + SEPARATOR +
                         tilesInfoString[2].trim().replace(",", ".") +
                         SEPARATOR + tilesInfoString[3].trim();
-                tilesMap.put(article, tileInfo);
+                if (!tilesMap.containsKey(article)) {
+                    newStrings++;
+                    tilesMap.put(article, tileInfo);
+                } else {
+                    String oldValue = tilesMap.replace(article, tileInfo);
+                    writeLog(article + " replaced " + oldValue + " -> " + tileInfo + "\n");
+                }
             }
+        }
+        if(!mapIsEmpty){
+            writeLog("При добавлении новых данных: \n новых артикулов: " + newStrings + "\n");
         }
     }
 
-    public void readFile(){
+    private void readFile(){
         Intent intent = new Intent(Intent.ACTION_OPEN_DOCUMENT);
         intent.addCategory(Intent.CATEGORY_OPENABLE);
         intent.setType("text/plain");
@@ -189,7 +179,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         if(requestCode == READ_REQUEST_CODE && resultCode == Activity.RESULT_OK){
             if(data != null){
                 Uri uri = data.getData();
-                String content = "";
+                String content;
                 try {
                     InputStream in = getContentResolver().openInputStream(uri);
                     BufferedReader r = new BufferedReader(new InputStreamReader(in));
@@ -198,31 +188,58 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                         total.append(line).append('\n');
                     }
                     content = total.toString();
-                    saveText(content);
+                    writeTilesInfoToMap(content);
+                    saveMapToTxt();
                 } catch (Exception e) {
-
+                    writeLog(e.getMessage());
                 }
             }
         }
         super.onActivityResult(requestCode, resultCode, data);
     }
 
-    public void saveText(String text){
+    private void saveMapToTxt(){
+        String text;
+        StringBuilder sb = new StringBuilder();
+        tilesMap.keySet().forEach(key ->{
+            String value = tilesMap.get(key);
+            sb.append(key);
+            sb.append(SEPARATOR);
+            sb.append(value);
+            sb.append("\n");
+        });
+        text = sb.toString();
         FileOutputStream fos = null;
         try {
             fos = openFileOutput(FILE_NAME, MODE_PRIVATE);
             fos.write(text.getBytes());
-            Toast.makeText(this, "Файл сохранен", Toast.LENGTH_SHORT).show();
-            readTilesType();
+            Toast.makeText(this, "Данные добавлены", Toast.LENGTH_SHORT).show();
+            fos.close();
         } catch(IOException ex) {
+            writeLog(ex.getMessage());
             Toast.makeText(this, ex.getMessage(), Toast.LENGTH_SHORT).show();
-        } finally{
+        } finally {
             try{
                 if(fos!=null)
                     fos.close();
             } catch(IOException ex){
                 Toast.makeText(this, ex.getMessage(), Toast.LENGTH_SHORT).show();
             }
+        }
+    }
+
+    private void writeLog(String text){
+        try {
+            File logFile = new File(getExternalFilesDir(null), LOGS_FILE);
+            if(logFile.exists()){
+                FileOutputStream fos = new FileOutputStream(logFile, true);
+                fos.write(text.getBytes());
+            } else {
+                FileOutputStream fos = new FileOutputStream(logFile);
+                fos.write(text.getBytes());
+            }
+        } catch(IOException ex) {
+            Toast.makeText(this, ex.getMessage(), Toast.LENGTH_SHORT).show();
         }
     }
 }

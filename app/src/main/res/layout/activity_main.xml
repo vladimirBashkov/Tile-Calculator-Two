@@ -2,22 +2,88 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    style="@style/SCREEN"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".MainActivity">
 
+    <EditText
+        android:id="@+id/SearchingArticle"
+        android:layout_width="200dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="40dp"
+        android:layout_marginTop="16dp"
+        android:ems="10"
+        android:inputType="number"
+        android:textAlignment="center"
+        style="@style/TEXT"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
     <Button
-        android:id="@+id/CalculateByM"
-        android:layout_width="150dp"
+        android:id="@+id/SearchFromTreeMap"
+        android:layout_width="100dp"
+        android:layout_height="40dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="40dp"
+        style="@style/SearchFromTreeMapBUTTON"
+        android:text="Найти"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <EditText
+        android:id="@+id/SearchingText"
+        android:layout_width="200dp"
         android:layout_height="50dp"
         android:layout_marginStart="40dp"
         android:layout_marginTop="8dp"
-        android:background="#75EC7A"
-        android:text="Расчет по м2"
-        android:textSize="12sp"
+        android:ems="10"
+        android:inputType="textPersonName"
+        android:textAlignment="center"
         android:textStyle="bold"
+        style="@style/TEXT"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/SearchingSquare" />
+        app:layout_constraintTop_toBottomOf="@+id/SearchingArticle" />
+
+    <Button
+        android:id="@+id/SearchByName"
+        android:layout_width="100dp"
+        android:layout_height="50dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="40dp"
+        android:text="Поиск по названию"
+        style="@style/SearchByNameBUTTON"
+        android:textSize="10sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/SearchFromTreeMap" />
+
+    <TextView
+        android:id="@+id/InfoAboutTile"
+        android:layout_width="350dp"
+        android:layout_height="50dp"
+        android:layout_marginTop="8dp"
+        android:textAlignment="center"
+        android:textSize="14sp"
+        android:textStyle="bold"
+        style="@style/TEXT"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/SearchingText" />
+
+    <Spinner
+        android:id="@+id/SelectedSpinner"
+        android:layout_width="350dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:gravity="center"
+        android:visibility="invisible"
+        style="@style/TEXT"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/SearchingText" />
+
+
 
     <TextView
         android:id="@+id/BoxVolume"
@@ -27,11 +93,55 @@
         android:layout_marginTop="5dp"
         android:text="Площадь упаковки"
         android:textAlignment="center"
-        android:textColor="@color/black"
+        style="@style/TEXT"
         android:textSize="14sp"
         android:textStyle="bold"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/InfoAboutTile" />
+
+    <EditText
+        android:id="@+id/BoxSquare"
+        android:layout_width="150dp"
+        android:layout_height="50dp"
+        android:layout_marginStart="40dp"
+        android:layout_marginTop="5dp"
+        android:ems="10"
+        android:inputType="numberDecimal"
+        android:maxLength="7"
+        android:textAlignment="center"
+        style="@style/TEXT"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/BoxVolume" />
+
+    <TextView
+        android:id="@+id/TileInBox"
+        android:layout_width="130dp"
+        android:layout_height="20dp"
+        android:layout_marginTop="5dp"
+        android:layout_marginEnd="40dp"
+        android:text="Штук в упаковке"
+        android:textAlignment="center"
+        style="@style/TEXT"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/InfoAboutTile" />
+
+
+    <EditText
+        android:id="@+id/TilesInBox"
+        android:layout_width="130dp"
+        android:layout_height="50dp"
+        android:layout_marginTop="5dp"
+        android:layout_marginEnd="40dp"
+        android:ems="10"
+        android:inputType="number"
+        android:maxLength="3"
+        android:textAlignment="center"
+        style="@style/TEXT"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/TileInBox" />
 
     <TextView
         android:id="@+id/Square"
@@ -41,10 +151,92 @@
         android:layout_marginTop="5dp"
         android:text="Нужно m2"
         android:textAlignment="center"
-        android:textColor="@color/black"
+        style="@style/TEXT"
         android:textStyle="bold"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/BoxSquare" />
+
+    <EditText
+        android:id="@+id/SearchingSquare"
+        android:layout_width="150dp"
+        android:layout_height="50dp"
+        android:layout_marginStart="40dp"
+        android:layout_marginTop="8dp"
+        android:ems="10"
+        android:inputType="numberDecimal"
+        android:maxLength="9"
+        android:textAlignment="center"
+        style="@style/TEXT"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/Square" />
+
+    <TextView
+        android:id="@+id/textView"
+        android:layout_width="130dp"
+        android:layout_height="20dp"
+        android:layout_marginTop="5dp"
+        android:layout_marginEnd="40dp"
+        android:text="Нужно штук"
+        android:textAlignment="center"
+        style="@style/TEXT"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/TilesInBox" />
+
+    <EditText
+        android:id="@+id/SearchingTiles"
+        android:layout_width="130dp"
+        android:layout_height="50dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="40dp"
+        android:ems="10"
+        android:inputType="number"
+        android:maxLength="9"
+        android:textAlignment="center"
+        android:textStyle="bold"
+        style="@style/TEXT"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView" />
+
+    <Button
+        android:id="@+id/CalculateByM"
+        android:layout_width="150dp"
+        android:layout_height="50dp"
+        android:layout_marginStart="40dp"
+        android:layout_marginTop="8dp"
+        style="@style/CalculateByMBUTTON"
+        android:text="Расчет по м2"
+        android:textSize="12sp"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/SearchingSquare" />
+
+    <Button
+        android:id="@+id/CalculateByPieces"
+        android:layout_width="130dp"
+        android:layout_height="50dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="40dp"
+        style="@style/CalculateByPiecesBUTTON"
+        android:text="Расчет по штукам"
+        android:textSize="12sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/SearchingTiles" />
+
+    <Button
+        android:id="@+id/CalculateByPack"
+        android:layout_width="300dp"
+        android:layout_height="50dp"
+        android:layout_marginTop="8dp"
+        style="@style/CalculateByPackBUTTON"
+        android:text="Расчет кратно упаковке"
+        android:textSize="12sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/CalculateByM" />
 
     <TextView
         android:id="@+id/TileSquare"
@@ -53,7 +245,7 @@
         android:layout_marginTop="8dp"
         android:text="Площадь кратно плиткам в большую сторону"
         android:textAlignment="center"
-        android:textColor="@android:color/holo_blue_dark"
+        style="@style/TEXT"
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -65,7 +257,7 @@
         android:layout_height="44dp"
         android:layout_marginTop="8dp"
         android:textAlignment="center"
-        android:textColor="@color/black"
+        style="@style/TEXT"
         android:textSize="34sp"
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
@@ -79,7 +271,7 @@
         android:layout_marginTop="8dp"
         android:text="Количество упаковок и штук"
         android:textAlignment="center"
-        android:textColor="@android:color/holo_blue_dark"
+        style="@style/TEXT"
         android:textSize="20sp"
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
@@ -96,6 +288,7 @@
         android:textAlignment="textEnd"
         android:textSize="34sp"
         android:textStyle="bold"
+        style="@style/TEXT"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/PackagingBox" />
 
@@ -107,7 +300,7 @@
         android:layout_marginTop="40dp"
         android:text="УПАКОВОК"
         android:textAlignment="center"
-        android:textColor="@android:color/holo_blue_dark"
+        style="@style/TEXT"
         android:textStyle="bold"
         app:layout_constraintStart_toEndOf="@+id/BoxCount"
         app:layout_constraintTop_toBottomOf="@+id/PackagingBox" />
@@ -119,6 +312,7 @@
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
         android:text="0"
+        style="@style/TEXT"
         android:textAlignment="textEnd"
         android:textAllCaps="false"
         android:textSize="34sp"
@@ -134,158 +328,10 @@
         android:layout_marginTop="40dp"
         android:text="ШТУК"
         android:textAlignment="center"
-        android:textColor="@android:color/holo_blue_dark"
+        style="@style/TEXT"
         android:textStyle="bold"
         app:layout_constraintStart_toEndOf="@+id/TileCount"
         app:layout_constraintTop_toBottomOf="@+id/PackagingBox" />
-
-    <TextView
-        android:id="@+id/TileInBox"
-        android:layout_width="130dp"
-        android:layout_height="20dp"
-        android:layout_marginTop="5dp"
-        android:layout_marginEnd="40dp"
-        android:text="Штук в упаковке"
-        android:textAlignment="center"
-        android:textColor="@color/black"
-        android:textStyle="bold"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/InfoAboutTile" />
-
-    <EditText
-        android:id="@+id/BoxSquare"
-        android:layout_width="150dp"
-        android:layout_height="50dp"
-        android:layout_marginStart="40dp"
-        android:layout_marginTop="5dp"
-        android:ems="10"
-        android:inputType="numberDecimal"
-        android:maxLength="7"
-        android:textAlignment="center"
-        android:textColor="@color/black"
-        android:textStyle="bold"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/BoxVolume" />
-
-    <EditText
-        android:id="@+id/TilesInBox"
-        android:layout_width="130dp"
-        android:layout_height="50dp"
-        android:layout_marginTop="5dp"
-        android:layout_marginEnd="40dp"
-        android:ems="10"
-        android:inputType="number"
-        android:maxLength="3"
-        android:textAlignment="center"
-        android:textColor="@color/black"
-        android:textStyle="bold"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/TileInBox" />
-
-    <EditText
-        android:id="@+id/SearchingSquare"
-        android:layout_width="150dp"
-        android:layout_height="50dp"
-        android:layout_marginStart="40dp"
-        android:layout_marginTop="8dp"
-        android:ems="10"
-        android:inputType="numberDecimal"
-        android:maxLength="9"
-        android:textAlignment="center"
-        android:textColor="@color/black"
-        android:textStyle="bold"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/Square" />
-
-    <TextView
-        android:id="@+id/textView"
-        android:layout_width="130dp"
-        android:layout_height="20dp"
-        android:layout_marginTop="5dp"
-        android:layout_marginEnd="40dp"
-        android:text="Нужно штук"
-        android:textAlignment="center"
-        android:textColor="@color/black"
-        android:textStyle="bold"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/TilesInBox" />
-
-    <EditText
-        android:id="@+id/SearchingTiles"
-        android:layout_width="130dp"
-        android:layout_height="50dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginEnd="40dp"
-        android:ems="10"
-        android:inputType="number"
-        android:maxLength="9"
-        android:textAlignment="center"
-        android:textStyle="bold"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView" />
-
-    <Button
-        android:id="@+id/CalculateByPieces"
-        android:layout_width="130dp"
-        android:layout_height="50dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginEnd="40dp"
-        android:background="#FBEB59"
-        android:text="Расчет по штукам"
-        android:textSize="12sp"
-        android:textStyle="bold"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/SearchingTiles" />
-
-    <Button
-        android:id="@+id/CalculateByPack"
-        android:layout_width="300dp"
-        android:layout_height="50dp"
-        android:layout_marginTop="8dp"
-        android:background="#79B9EC"
-        android:text="Расчет кратно упаковке"
-        android:textSize="12sp"
-        android:textStyle="bold"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/CalculateByM" />
-
-    <Button
-        android:id="@+id/SearchFromTreeMap"
-        android:layout_width="100dp"
-        android:layout_height="40dp"
-        android:layout_marginTop="16dp"
-        android:layout_marginEnd="40dp"
-        android:text="Найти"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <EditText
-        android:id="@+id/SearchingArticle"
-        android:layout_width="200dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="40dp"
-        android:layout_marginTop="16dp"
-        android:ems="10"
-        android:inputType="number"
-        android:textAlignment="center"
-        android:textColor="@color/black"
-        android:textStyle="bold"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <TextView
-        android:id="@+id/InfoAboutTile"
-        android:layout_width="350dp"
-        android:layout_height="50dp"
-        android:layout_marginTop="8dp"
-        android:textAlignment="center"
-        android:textColor="@color/black"
-        android:textSize="14sp"
-        android:textStyle="bold"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/SearchingText" />
 
     <Button
         android:id="@+id/DownloadButton"
@@ -294,43 +340,9 @@
         android:layout_marginStart="40dp"
         android:layout_marginBottom="16dp"
         android:text="Загрузить данные"
+        style="@style/DownloadBUTTON"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
-
-    <Spinner
-        android:id="@+id/SelectedSpinner"
-        android:layout_width="350dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        android:gravity="center"
-        android:visibility="invisible"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/SearchingText" />
-
-    <EditText
-        android:id="@+id/SearchingText"
-        android:layout_width="200dp"
-        android:layout_height="50dp"
-        android:layout_marginStart="40dp"
-        android:layout_marginTop="8dp"
-        android:ems="10"
-        android:inputType="textPersonName"
-        android:textAlignment="center"
-        android:textStyle="bold"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/SearchingArticle" />
-
-    <Button
-        android:id="@+id/SearchByName"
-        android:layout_width="100dp"
-        android:layout_height="50dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginEnd="40dp"
-        android:text="Поиск по названию"
-        android:textSize="10sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/SearchFromTreeMap" />
 
     <Button
         android:id="@+id/ShowHistory"
@@ -339,6 +351,7 @@
         android:layout_marginEnd="40dp"
         android:layout_marginBottom="16dp"
         android:text="История"
+        style="@style/ShowHistoryBUTTON"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />
 
@@ -349,12 +362,11 @@
         android:layout_marginTop="8dp"
         android:text="TextView"
         android:textAlignment="center"
-        android:textColor="@color/black"
+        style="@style/TEXT"
         android:textSize="16sp"
         android:textStyle="bold"
         android:visibility="invisible"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/CalculateByPack" />
-
 </androidx.constraintlayout.widget.ConstraintLayout>

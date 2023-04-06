@@ -1,0 +1,61 @@
+<resources xmlns:tools="http://schemas.android.com/tools">
+    <!-- Base application theme. -->
+    <style name="Theme.TileCalculatorTwo" parent="Theme.MaterialComponents.DayNight.DarkActionBar">
+        <!-- Primary brand color. -->
+        <item name="colorPrimary">@color/purple_500</item>
+        <item name="colorPrimaryVariant">@color/purple_700</item>
+        <item name="colorOnPrimary">@color/white</item>
+        <!-- Secondary brand color. -->
+        <item name="colorSecondary">@color/purple_500</item>
+        <item name="colorSecondaryVariant">@color/purple_700</item>
+        <item name="colorOnSecondary">@color/black</item>
+        <!-- Status bar color. -->
+        <item name="android:statusBarColor" tools:targetApi="l">?attr/colorPrimaryVariant</item>
+        <!-- Customize your theme here. -->
+    </style>
+
+    <!-- Light mode  -->
+    <style name="SCREEN">
+        <item name="android:background">#FFF</item>
+    </style>
+
+    <style name="TEXT">
+        <item name="android:textColor">#000</item>
+    </style>
+
+    <style name="SearchFromTreeMapBUTTON">
+        <item name="android:backgroundTint">#FFEB3B</item>
+        <item name="android:textColor">#000</item>
+    </style>
+
+    <style name="SearchByNameBUTTON">
+        <item name="android:backgroundTint">#2196F3</item>
+        <item name="android:textColor">#000</item>
+    </style>
+
+    <style name="CalculateByMBUTTON">
+        <item name="android:backgroundTint">#8BC34A</item>
+        <item name="android:textColor">#000</item>
+    </style>
+
+    <style name="CalculateByPiecesBUTTON">
+        <item name="android:backgroundTint">#FFEB3B</item>
+        <item name="android:textColor">#000</item>
+    </style>
+
+    <style name="CalculateByPackBUTTON">
+        <item name="android:backgroundTint">#999EFF</item>
+        <item name="android:textColor">#000</item>
+    </style>
+
+    <style name="DownloadBUTTON">
+        <item name="android:backgroundTint">#FF1100</item>
+        <item name="android:textColor">#000</item>
+    </style>
+
+    <style name="ShowHistoryBUTTON">
+        <item name="android:backgroundTint">#BFF186</item>
+        <item name="android:textColor">#000</item>
+    </style>
+
+</resources>
