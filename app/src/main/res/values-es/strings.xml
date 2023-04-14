@@ -1,0 +1,53 @@
+<resources>
+    <string name="app_name">Box Calculator Two</string>
+    <string name="SearchFromTreeMapButton">Buscar</string>
+    <string name="SearchByNameButton">Buscar por nombre</string>
+    <string name="BoxVolumeTextView">Volumen de caja</string>
+    <string name="TileInBoxTextView">Azulejos en caja</string>
+    <string name="SquareTextView">Cuadrado requerido</string>
+    <string name="RequiredPiecesTextView">Piezas requeridas</string>
+    <string name="CalculateByMButton">Calcular por área</string>
+    <string name="CalculateByPiecesButton">Calcular por piezas</string>
+    <string name="CalculateByPackButton">Calcular por paquetes</string>
+    <string name="TileSquareTextView">Área calculada (múltiplo de mosaicos)</string>
+    <string name="PackagingBoxTextView">Cantidad paquetes y piezas</string>
+    <string name="PackInfoTextView">paquetes</string>
+    <string name="TilesInfoNameTextView">piezas</string>
+    <string name="ShowHistoryAndAddingButton">Historia y adición</string>
+    <string name="ShowHistoryButton">Historia</string>
+    <string name="DownloadButton">Descargar datos</string>
+    <string name="BackToMainScreenButton">De vuelta a la pantalla principal</string>
+    <string name="UploadDataButton">Subir datos</string>
+    <string name="AddDataToBase">Añadir artículo</string>
+    <string name="ArticleTextView">Artículo</string>
+    <string name="DescriptionBoxTextView">Descripción</string>
+    <string name="ShowHelpButton">Mostrar ejemplo de texto de relleno</string>
+
+    <!-- For java class -->
+    <string name="ExampleOfFillingText">
+        1111 ~ nombre1 ~ 1.1 ~ 11\n
+        2222 ~ nombre2 ~ 2.2 ~ 22\n
+        3333 ~ nombre3 ~ 3.3 ~ 33\n
+        4444 ~ nombre4 ~ 4.4 ~ 44\n
+        5555 ~ nombre5 ~ 5.5 ~ 55\n
+        Artículo (máximo 9 caracteres) ~ nombre ~ \n
+        volumen (máximo 7 caracteres)~ \n
+        piezas (máximo 3 caracteres) (Enter - carácter de nueva línea)
+    </string>
+    <string name="EmptyHistoryMessage">la historia esta vacia</string>
+    <string name="EmptyFieldsMessage">Algunos campos están vacíos</string>
+    <string name="AddedMessage">DATOS AÑADIDOS</string>
+    <string name="HistoryMessageFirst">Para </string>
+    <string name="HistoryMessageByM"> m2 mosaicos múltiples de, debe escribir </string>
+    <string name="HistoryMessageByPackages">m2 múltiplos de paquetes, debe escribir</string>
+    <string name="HistoryMessageByPieces"> piezas, debe escribir</string>
+    <string name="HistoryMessageSecond"> m2. Esto es</string>
+    <string name="HistoryMessagePack"> paquetes y </string>
+    <string name="HistoryMessagePcs"> piezas.</string>
+    <string name="HistoryMessagePackByPack"> paquetes.</string>
+    <string name="EmptySearchByArticleMessage">Este artículo no está en la base de datos.</string>
+    <string name="EmptySearchByNameMessage">No hay resultados para esta búsqueda</string>
+    <string name="ZeroValueInPiecesMessage">No puede haber 0 piezas por paquete.</string>
+    <string name="ZeroValueInVolumeMessage">No puede haber 0 m2 por pack</string>
+    <string name="UploadedDataMessage">Datos cargado</string>
+</resources>

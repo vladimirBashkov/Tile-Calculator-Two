@@ -21,41 +21,86 @@
     </style>
 
     <style name="TEXT">
+        <item name="android:textAlignment">center</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:textSize">14sp</item>
         <item name="android:textColor">#FFF</item>
     </style>
 
     <style name="SearchFromTreeMapBUTTON">
         <item name="android:backgroundTint">#433E11</item>
         <item name="android:textColor">#FFF</item>
+        <item name="android:textSize">12sp</item>
+        <item name="android:textStyle">bold</item>
     </style>
 
     <style name="SearchByNameBUTTON">
         <item name="android:backgroundTint">#483963</item>
         <item name="android:textColor">#FFF</item>
+        <item name="android:textSize">12sp</item>
+        <item name="android:textStyle">bold</item>
     </style>
 
     <style name="CalculateByMBUTTON">
+        <item name="android:textSize">12sp</item>
+        <item name="android:textStyle">bold</item>
         <item name="android:backgroundTint">#3A5020</item>
         <item name="android:textColor">#FFF</item>
     </style>
 
     <style name="CalculateByPiecesBUTTON">
+        <item name="android:textSize">12sp</item>
+        <item name="android:textStyle">bold</item>
         <item name="android:backgroundTint">#96150C</item>
         <item name="android:textColor">#FFF</item>
     </style>
 
     <style name="CalculateByPackBUTTON">
+        <item name="android:textSize">16sp</item>
+        <item name="android:textStyle">bold</item>
         <item name="android:backgroundTint">#3A2D50</item>
         <item name="android:textColor">#FFF</item>
     </style>
 
-    <style name="DownloadBUTTON">
-        <item name="android:backgroundTint">#FF1100</item>
-        <item name="android:textColor">#000</item>
+    <style name="ShowHistoryBUTTON">
+        <item name="android:textSize">12sp</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:backgroundTint">#344224</item>
+        <item name="android:textColor">#FFF</item>
     </style>
 
-    <style name="ShowHistoryBUTTON">
-        <item name="android:backgroundTint">#344224</item>
+    <style name="BackToMainScreenBUTTON">
+        <item name="android:textSize">12sp</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:backgroundTint">#266829</item>
+        <item name="android:textColor">#FFF</item>
+    </style>
+
+    <style name="AddArticleBUTTON">
+        <item name="android:textSize">12sp</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:backgroundTint">#7A6E00</item>
+        <item name="android:textColor">#FFF</item>
+    </style>
+
+    <style name="DownloadBUTTON">
+        <item name="android:textSize">12sp</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:backgroundTint">#8E0C03</item>
+        <item name="android:textColor">#FFF</item>
+    </style>
+
+    <style name="UploadDataBUTTON">
+        <item name="android:textSize">12sp</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:backgroundTint">#784904</item>
+        <item name="android:textColor">#FFF</item>
+    </style>
+
+    <style name="ShowHelpBUTTON">
+        <item name="android:textSize">12sp</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:backgroundTint">#144015</item>
         <item name="android:textColor">#FFF</item>
     </style>
 

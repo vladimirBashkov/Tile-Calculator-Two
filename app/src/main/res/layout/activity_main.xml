@@ -14,10 +14,9 @@
         android:layout_marginStart="40dp"
         android:layout_marginTop="16dp"
         android:ems="10"
+        android:maxLength="9"
         android:inputType="number"
-        android:textAlignment="center"
         style="@style/TEXT"
-        android:textStyle="bold"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -28,33 +27,31 @@
         android:layout_marginTop="16dp"
         android:layout_marginEnd="40dp"
         style="@style/SearchFromTreeMapBUTTON"
-        android:text="Найти"
+        android:text="@string/SearchFromTreeMapButton"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <EditText
         android:id="@+id/SearchingText"
+        style="@style/TEXT"
         android:layout_width="200dp"
         android:layout_height="50dp"
         android:layout_marginStart="40dp"
         android:layout_marginTop="8dp"
         android:ems="10"
-        android:inputType="textPersonName"
-        android:textAlignment="center"
-        android:textStyle="bold"
-        style="@style/TEXT"
+        android:maxLength="20"
+        android:inputType="text"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/SearchingArticle" />
 
     <Button
         android:id="@+id/SearchByName"
+        style="@style/SearchByNameBUTTON"
         android:layout_width="100dp"
-        android:layout_height="50dp"
+        android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
         android:layout_marginEnd="40dp"
-        android:text="Поиск по названию"
-        style="@style/SearchByNameBUTTON"
-        android:textSize="10sp"
+        android:text="@string/SearchByNameButton"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/SearchFromTreeMap" />
 
@@ -63,9 +60,6 @@
         android:layout_width="350dp"
         android:layout_height="50dp"
         android:layout_marginTop="8dp"
-        android:textAlignment="center"
-        android:textSize="14sp"
-        android:textStyle="bold"
         style="@style/TEXT"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -76,14 +70,11 @@
         android:layout_width="350dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
-        android:gravity="center"
         android:visibility="invisible"
         style="@style/TEXT"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/SearchingText" />
-
-
 
     <TextView
         android:id="@+id/BoxVolume"
@@ -91,11 +82,8 @@
         android:layout_height="20dp"
         android:layout_marginStart="40dp"
         android:layout_marginTop="5dp"
-        android:text="Площадь упаковки"
-        android:textAlignment="center"
+        android:text="@string/BoxVolumeTextView"
         style="@style/TEXT"
-        android:textSize="14sp"
-        android:textStyle="bold"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/InfoAboutTile" />
 
@@ -108,9 +96,7 @@
         android:ems="10"
         android:inputType="numberDecimal"
         android:maxLength="7"
-        android:textAlignment="center"
         style="@style/TEXT"
-        android:textStyle="bold"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/BoxVolume" />
 
@@ -120,10 +106,8 @@
         android:layout_height="20dp"
         android:layout_marginTop="5dp"
         android:layout_marginEnd="40dp"
-        android:text="Штук в упаковке"
-        android:textAlignment="center"
+        android:text="@string/TileInBoxTextView"
         style="@style/TEXT"
-        android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/InfoAboutTile" />
 
@@ -137,9 +121,7 @@
         android:ems="10"
         android:inputType="number"
         android:maxLength="3"
-        android:textAlignment="center"
         style="@style/TEXT"
-        android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/TileInBox" />
 
@@ -149,10 +131,8 @@
         android:layout_height="20dp"
         android:layout_marginStart="40dp"
         android:layout_marginTop="5dp"
-        android:text="Нужно m2"
-        android:textAlignment="center"
+        android:text="@string/SquareTextView"
         style="@style/TEXT"
-        android:textStyle="bold"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/BoxSquare" />
 
@@ -165,22 +145,18 @@
         android:ems="10"
         android:inputType="numberDecimal"
         android:maxLength="9"
-        android:textAlignment="center"
         style="@style/TEXT"
-        android:textStyle="bold"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/Square" />
 
     <TextView
-        android:id="@+id/textView"
+        android:id="@+id/RequiredPieces"
         android:layout_width="130dp"
         android:layout_height="20dp"
         android:layout_marginTop="5dp"
         android:layout_marginEnd="40dp"
-        android:text="Нужно штук"
-        android:textAlignment="center"
+        android:text="@string/RequiredPiecesTextView"
         style="@style/TEXT"
-        android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/TilesInBox" />
 
@@ -193,11 +169,9 @@
         android:ems="10"
         android:inputType="number"
         android:maxLength="9"
-        android:textAlignment="center"
-        android:textStyle="bold"
         style="@style/TEXT"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView" />
+        app:layout_constraintTop_toBottomOf="@+id/RequiredPieces" />
 
     <Button
         android:id="@+id/CalculateByM"
@@ -206,9 +180,7 @@
         android:layout_marginStart="40dp"
         android:layout_marginTop="8dp"
         style="@style/CalculateByMBUTTON"
-        android:text="Расчет по м2"
-        android:textSize="12sp"
-        android:textStyle="bold"
+        android:text="@string/CalculateByMButton"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/SearchingSquare" />
 
@@ -219,9 +191,7 @@
         android:layout_marginTop="8dp"
         android:layout_marginEnd="40dp"
         style="@style/CalculateByPiecesBUTTON"
-        android:text="Расчет по штукам"
-        android:textSize="12sp"
-        android:textStyle="bold"
+        android:text="@string/CalculateByPiecesButton"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/SearchingTiles" />
 
@@ -231,9 +201,7 @@
         android:layout_height="50dp"
         android:layout_marginTop="8dp"
         style="@style/CalculateByPackBUTTON"
-        android:text="Расчет кратно упаковке"
-        android:textSize="12sp"
-        android:textStyle="bold"
+        android:text="@string/CalculateByPackButton"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/CalculateByM" />
@@ -243,10 +211,8 @@
         android:layout_width="300dp"
         android:layout_height="45dp"
         android:layout_marginTop="8dp"
-        android:text="Площадь кратно плиткам в большую сторону"
-        android:textAlignment="center"
+        android:text="@string/TileSquareTextView"
         style="@style/TEXT"
-        android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/CalculateByPack" />
@@ -256,10 +222,8 @@
         android:layout_width="350dp"
         android:layout_height="44dp"
         android:layout_marginTop="8dp"
-        android:textAlignment="center"
         style="@style/TEXT"
         android:textSize="34sp"
-        android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/TileSquare" />
@@ -269,11 +233,9 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
-        android:text="Количество упаковок и штук"
-        android:textAlignment="center"
+        android:text="@string/PackagingBoxTextView"
         style="@style/TEXT"
         android:textSize="20sp"
-        android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/Result" />
@@ -282,12 +244,10 @@
         android:id="@+id/BoxCount"
         android:layout_width="120dp"
         android:layout_height="50dp"
-        android:layout_marginStart="10dp"
+        android:layout_marginStart="40dp"
         android:layout_marginTop="8dp"
         android:text="0"
-        android:textAlignment="textEnd"
         android:textSize="34sp"
-        android:textStyle="bold"
         style="@style/TEXT"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/PackagingBox" />
@@ -298,10 +258,8 @@
         android:layout_height="20dp"
         android:layout_marginStart="8dp"
         android:layout_marginTop="40dp"
-        android:text="УПАКОВОК"
-        android:textAlignment="center"
+        android:text="@string/PackInfoTextView"
         style="@style/TEXT"
-        android:textStyle="bold"
         app:layout_constraintStart_toEndOf="@+id/BoxCount"
         app:layout_constraintTop_toBottomOf="@+id/PackagingBox" />
 
@@ -309,14 +267,12 @@
         android:id="@+id/TileCount"
         android:layout_width="60dp"
         android:layout_height="50dp"
-        android:layout_marginStart="8dp"
+        android:layout_marginStart="40dp"
         android:layout_marginTop="8dp"
         android:text="0"
         style="@style/TEXT"
-        android:textAlignment="textEnd"
         android:textAllCaps="false"
         android:textSize="34sp"
-        android:textStyle="bold"
         app:layout_constraintStart_toEndOf="@+id/PackInfo"
         app:layout_constraintTop_toBottomOf="@+id/PackagingBox" />
 
@@ -326,47 +282,19 @@
         android:layout_height="20dp"
         android:layout_marginStart="8dp"
         android:layout_marginTop="40dp"
-        android:text="ШТУК"
-        android:textAlignment="center"
+        android:text="@string/TilesInfoNameTextView"
         style="@style/TEXT"
-        android:textStyle="bold"
         app:layout_constraintStart_toEndOf="@+id/TileCount"
         app:layout_constraintTop_toBottomOf="@+id/PackagingBox" />
 
     <Button
-        android:id="@+id/DownloadButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="40dp"
-        android:layout_marginBottom="16dp"
-        android:text="Загрузить данные"
-        style="@style/DownloadBUTTON"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
-
-    <Button
         android:id="@+id/ShowHistory"
+        style="@style/ShowHistoryBUTTON"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="40dp"
         android:layout_marginBottom="16dp"
-        android:text="История"
-        style="@style/ShowHistoryBUTTON"
+        android:text="@string/ShowHistoryAndAddingButton"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent" />
-
-    <TextView
-        android:id="@+id/History"
-        android:layout_width="350dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        android:text="TextView"
-        android:textAlignment="center"
-        style="@style/TEXT"
-        android:textSize="16sp"
-        android:textStyle="bold"
-        android:visibility="invisible"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/CalculateByPack" />
+        app:layout_constraintStart_toStartOf="parent" />
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -1,0 +1,54 @@
+<resources>
+    <!-- For layout class -->
+    <string name="app_name">Box Calculator Two</string>
+    <string name="SearchFromTreeMapButton">Найти</string>
+    <string name="SearchByNameButton">Найти по названию</string>
+    <string name="BoxVolumeTextView">Площадь упаковки</string>
+    <string name="TileInBoxTextView">Штук в упаковке</string>
+    <string name="SquareTextView">Нужно m2</string>
+    <string name="RequiredPiecesTextView">Нужно штук</string>
+    <string name="CalculateByMButton">Расчет по м2</string>
+    <string name="CalculateByPiecesButton">Расчет по штукам</string>
+    <string name="CalculateByPackButton">Расчет кратно упаковке</string>
+    <string name="TileSquareTextView">Площадь кратно плиткам в большую сторону</string>
+    <string name="PackagingBoxTextView">Количество упаковок и штук</string>
+    <string name="PackInfoTextView">УП</string>
+    <string name="TilesInfoNameTextView">ШТ</string>
+    <string name="ShowHistoryAndAddingButton">История и Добавление</string>
+    <string name="ShowHistoryButton">История</string>
+    <string name="DownloadButton">Загрузить данные</string>
+    <string name="BackToMainScreenButton">Вернуться на главный экран</string>
+    <string name="UploadDataButton">Выгрузить данные</string>
+    <string name="AddDataToBase">Добавить артикул</string>
+    <string name="ArticleTextView">Артикул</string>
+    <string name="DescriptionBoxTextView">Описание</string>
+    <string name="ShowHelpButton">Показать пример ТХТ файла</string>
+
+    <!-- For java class -->
+    <string name="ExampleOfFillingText">
+        1111 ~ имя1 ~ 1.1 ~ 11\n
+        2222 ~ имя2 ~ 2.2 ~ 22\n
+        3333 ~ имя3 ~ 3.3 ~ 33\n
+        4444 ~ имя4 ~ 4.4 ~ 44\n
+        5555 ~ имя5 ~ 5.5 ~ 55\n
+        артикул (максимум 9 знаков) ~ name ~ \n
+        volume (максимум 7 знаков)~ \n
+        pieces (максимум 3 знака) (Enter - перенос строки)
+    </string>
+    <string name="EmptyHistoryMessage">История пуста</string>
+    <string name="EmptyFieldsMessage">Не все поля заполнены</string>
+    <string name="AddedMessage">ДАННЫЕ ДОБАВЛЕНЫ</string>
+    <string name="HistoryMessageFirst">Для</string>
+    <string name="HistoryMessageByM"> м2 кратно плиткам, Вы должны записать: </string>
+    <string name="HistoryMessageByPackages"> м2 кратно упаковке, Вы должны записать:</string>
+    <string name="HistoryMessageByPieces"> шт., Вы должны записать:</string>
+    <string name="HistoryMessageSecond"> м2. Это </string>
+    <string name="HistoryMessagePack"> уп. и </string>
+    <string name="HistoryMessagePcs"> шт.</string>
+    <string name="HistoryMessagePackByPack"> уп.</string>
+    <string name="EmptySearchByArticleMessage">Этого артикула нет в базе данных</string>
+    <string name="EmptySearchByNameMessage">Нет результатов поиска по данному названию</string>
+    <string name="ZeroValueInPiecesMessage">В заводской упаковке не бывает 0 шт.</string>
+    <string name="ZeroValueInVolumeMessage">В заводской упаковке не бывает 0 м2.</string>
+    <string name="UploadedDataMessage">Данные выгружены</string>
+</resources>

@@ -1,53 +1,77 @@
 package com.example.tilecalculatortwo;
 
+import android.app.Activity;
 import android.widget.EditText;
 import android.widget.TextView;
+
+import com.example.tilecalculatortwo.historypack.HistoryArray;
+import com.example.tilecalculatortwo.historypack.HistoryEntry;
+import com.example.tilecalculatortwo.historypack.SearchingType;
+
 import java.math.BigDecimal;
 import java.math.RoundingMode;
-import java.util.ArrayList;
 
-public class Calculator {
-    Integer SCALE = 6;
+public class Calculator extends Activity {
+    private final Integer FIRST_SCALE = 20;
+    private final Integer FINAL_SCALE = 6;
     private final TextView result;
     private final TextView boxCount;
     private final TextView tileCount;
-    private final TextView packInfo;
-    private final TextView tilesInfo;
     private final TextView infoAboutTile;
-    ArrayList<String> history = new ArrayList<>();
+    HistoryArray historyArray;
+    private final String firstMessage;
+    private final String messageByM;
+    private final String messageByPackages;
+    private final String messageByPieces;
+    private final String secondMessage;
+    private final String messagePack;
+    private final String messagePcs;
+    private final String messagePackByPack;
 
-    Calculator(TextView result, TextView boxCount, TextView tileCount,
-               TextView packInfo, TextView tilesInfo, TextView infoAboutTile){
+    public Calculator(TextView result, TextView boxCount,
+                      TextView tileCount, TextView infoAboutTile,
+                      HistoryArray historyArray, String firstMessage,
+                      String messageByM, String messageByPackages,
+                      String messageByPieces, String secondMessage,
+                      String messagePack, String messagePcs, String messagePackByPack) {
         this.result = result;
         this.boxCount = boxCount;
         this.tileCount = tileCount;
-        this.packInfo = packInfo;
-        this.tilesInfo = tilesInfo;
         this.infoAboutTile = infoAboutTile;
+        this.historyArray = historyArray;
+        this.firstMessage = firstMessage;
+        this.messageByM = messageByM;
+        this.messageByPackages = messageByPackages;
+        this.messageByPieces = messageByPieces;
+        this.secondMessage = secondMessage;
+        this.messagePack = messagePack;
+        this.messagePcs = messagePcs;
+        this.messagePackByPack = messagePackByPack;
     }
 
     public void calculateSquareByMeters(String box, int countTiles, String search, EditText searchingTiles){
         BigDecimal boxB = new BigDecimal(box);
         BigDecimal countTilesB = new BigDecimal(countTiles);
-        BigDecimal oneTile = boxB.divide(countTilesB, 20, RoundingMode.HALF_UP);
+        BigDecimal oneTile = boxB.divide(countTilesB, FIRST_SCALE, RoundingMode.HALF_UP);
         BigDecimal searchB = new BigDecimal(search);
-        long res = searchB.divide(oneTile, 20, RoundingMode.HALF_UP)
+        long res = searchB.divide(oneTile, FIRST_SCALE, RoundingMode.HALF_UP)
                 .longValue();
-        double resD = searchB.divide(oneTile, 20, RoundingMode.HALF_UP)
+        double resD = searchB.divide(oneTile, FIRST_SCALE, RoundingMode.HALF_UP)
                 .doubleValue();
         if(Double.compare(resD, res)!=0){
             res= res+1;
         }
         searchingTiles.setText(Long.toString(res));
         BigDecimal finB = oneTile.multiply(new BigDecimal(res))
-                .setScale(SCALE,RoundingMode.HALF_UP)
+                .setScale(FINAL_SCALE,RoundingMode.HALF_UP)
                 .stripTrailingZeros();
         result.setText(finB.toString());
         int boxResult = Integer.parseInt(Long.toString(res))/countTiles;
         int tiles = Integer.parseInt(Long.toString(res))%countTiles;
-        String name = infoAboutTile.getText().toString();
-        history.add(name + ". Для " + search + " м2., необходимо " + finB +
-                " м2. Это " + boxResult + " уп. " + tiles + " шт.");
+        HistoryEntry entry = new HistoryEntry(firstMessage, messageByM,
+                secondMessage, messagePack, messagePcs, SearchingType.BY_METHER,
+                readBoxName(), search, finB.toString(), boxResult, tiles);
+        historyArray.addEntry(entry);
         if(res/countTiles > 99999){
             setBoxInformation(100000, 1);
         } else {
@@ -59,36 +83,38 @@ public class Calculator {
     public void calculateSquareByTiles(String box, int countTiles, String search){
         BigDecimal boxB = new BigDecimal(box);
         BigDecimal countTilesB = new BigDecimal(countTiles);
-        BigDecimal oneTile = boxB.divide(countTilesB, 20, RoundingMode.HALF_UP);
+        BigDecimal oneTile = boxB.divide(countTilesB, FIRST_SCALE, RoundingMode.HALF_UP);
         int searchingTiles = Integer.parseInt(search);
         BigDecimal finB = oneTile.multiply(new BigDecimal(searchingTiles))
-                .setScale(SCALE,RoundingMode.HALF_UP)
+                .setScale(FINAL_SCALE,RoundingMode.HALF_UP)
                 .stripTrailingZeros();
         result.setText(finB.toString());
         setBoxInformation(searchingTiles, countTiles);
         int boxResult = searchingTiles/countTiles;
         int tiles = searchingTiles%countTiles;
-        String name = infoAboutTile.getText().toString();
-        history.add(name + ". Для " + search + " шт., необходимо " + finB +
-                " м2. Это " + boxResult + " уп. " + tiles + " шт.");
+        HistoryEntry entry = new HistoryEntry(firstMessage, messageByPieces,
+                secondMessage, messagePack, messagePcs, SearchingType.BY_PIECES,
+                readBoxName(), search, finB.toString(), boxResult, tiles);
+        historyArray.addEntry(entry);
     }
 
     public void calculateSquareByPack(String box, String search){
         BigDecimal boxB = new BigDecimal(box);
         BigDecimal searchB = new BigDecimal(search);
-        BigDecimal searchingBox = searchB.divide(boxB, 20, RoundingMode.HALF_UP);
+        BigDecimal searchingBox = searchB.divide(boxB, FIRST_SCALE, RoundingMode.HALF_UP);
         long res = searchingBox.longValue();
         double resD = searchingBox.doubleValue();
         if(Double.compare(resD, res)!=0){
             res= res+1;
         }
         BigDecimal finB = boxB.multiply(new BigDecimal(res))
-                .setScale(SCALE,RoundingMode.HALF_UP)
+                .setScale(FINAL_SCALE,RoundingMode.HALF_UP)
                 .stripTrailingZeros();
         result.setText(finB.toString());
-        String name = infoAboutTile.getText().toString();
-        history.add(name + ". Для " + search + " м2 кратно пачкам, необходимо " + finB +
-                " м2. Это " + res + " уп.");
+        HistoryEntry entry = new HistoryEntry(firstMessage, messageByPackages,
+                secondMessage, messagePackByPack, "", SearchingType.BY_METHER_AND_BY_PACK,
+                readBoxName(), search, finB.toString(), res, 0);
+        historyArray.addEntry(entry);
         if(res > 99999){
             setBoxInformation(100000, 1);
         } else {
@@ -100,40 +126,18 @@ public class Calculator {
     private void setBoxInformation(int allTiles, int tilesInPack){
         int boxCountInt = allTiles/tilesInPack;
         if(boxCountInt > 99999 || boxCountInt < 0){
-            boxCount.setText("МНОГО");
-            packInfo.setText("УПАКОВОК");
+            boxCount.setText("0");
             tileCount.setText("0");
-            tilesInfo.setText("ШТУК");
             return;
         }
         boxCount.setText(Integer.toString(boxCountInt));
         int tilesCountInt = allTiles%tilesInPack;
-        if (boxCountInt%100 >= 11 && boxCountInt%100 <= 19) {
-            packInfo.setText("УПАКОВОК");
-        } else {
-            if (boxCountInt%10 == 1){
-                packInfo.setText("УПАКОВКА");
-            } else if (boxCountInt%10 > 1 && boxCountInt%10 <= 4){
-                packInfo.setText("УПАКОВКИ");
-            } else {
-                packInfo.setText("УПАКОВОК");
-            }
-        }
         tileCount.setText(Integer.toString(tilesCountInt));
-        if (tilesCountInt%100 >= 11 && tilesCountInt%100 <= 19) {
-            tilesInfo.setText("ШТУК");
-        } else {
-            if (tilesCountInt%10 == 1){
-                tilesInfo.setText("ШТУКА");
-            } else if (tilesCountInt%10 > 1 && tilesCountInt%10 <= 4){
-                tilesInfo.setText("ШТУКИ");
-            } else {
-                tilesInfo.setText("ШТУК");
-            }
-        }
     }
 
-    public ArrayList<String> getHistory() {
-        return history;
+    private String readBoxName(){
+        String name = infoAboutTile.getText().toString();
+        infoAboutTile.setText("");
+        return name;
     }
 }

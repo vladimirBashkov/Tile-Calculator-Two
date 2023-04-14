@@ -1,0 +1,53 @@
+<resources>
+    <string name="app_name">Box Calculator Two</string>
+    <string name="SearchFromTreeMapButton">Rechercher</string>
+    <string name="SearchByNameButton">Rechercher par nom</string>
+    <string name="BoxVolumeTextView">Volume de la boîte</string>
+    <string name="TileInBoxTextView">Tuiles en boîte</string>
+    <string name="SquareTextView">Surface requise</string>
+    <string name="RequiredPiecesTextView">Pièces requises</string>
+    <string name="CalculateByMButton">Calculer par superficie</string>
+    <string name="CalculateByPiecesButton">Calculer par pièces</string>
+    <string name="CalculateByPackButton">Calculer par packs</string>
+    <string name="TileSquareTextView">Surface calculée (multiple de tuiles)</string>
+    <string name="PackagingBoxTextView">Quantité paquets et pièces</string>
+    <string name="PackInfoTextView">paquets</string>
+    <string name="TilesInfoNameTextView">pièces</string>
+    <string name="ShowHistoryAndAddingButton">Historique et ajout</string>
+    <string name="ShowHistoryButton">Histoire</string>
+    <string name="DownloadButton">Télécharger les données</string>
+    <string name="BackToMainScreenButton">Retour à l\'écran principal</string>
+    <string name="UploadDataButton">Télécharger des données</string>
+    <string name="AddDataToBase">Ajouter un article</string>
+    <string name="ArticleTextView">Article</string>
+    <string name="DescriptionBoxTextView">Description</string>
+    <string name="ShowHelpButton">Afficher un exemple de remplissage de texte</string>
+
+    <!-- For java class -->
+    <string name="ExampleOfFillingText">
+        1111 ~ Nom1 ~ 1.1 ~ 11\n
+        2222 ~ Nom2 ~ 2.2 ~ 22\n
+        3333 ~ Nom3 ~ 3.3 ~ 33\n
+        4444 ~ Nom4 ~ 4.4 ~ 44\n
+        5555 ~ nNom5 ~ 5.5 ~ 55\n
+        article (max 9 caractères) ~ Nom ~ \n
+        volume (max 7 caractères)~ \n
+        pièces (max 3 caractères) (Entrée - caractère de nouvelle ligne)
+    </string>
+    <string name="EmptyHistoryMessage">L\'historique est vide</string>
+    <string name="EmptyFieldsMessage">Certains champs sont vides</string>
+    <string name="AddedMessage">DONNÉES AJOUTÉES</string>
+    <string name="HistoryMessageFirst">Pour</string>
+    <string name="HistoryMessageByM"> m2 de tuiles multiples, vous devez écrire </string>
+    <string name="HistoryMessageByPackages"> m2 multiples de colis, vous devez écrire</string>
+    <string name="HistoryMessageByPieces"> pièces, vous devez écrire</string>
+    <string name="HistoryMessageSecond"> m2. Il s\'agit de</string>
+    <string name="HistoryMessagePack">paquets et</string>
+    <string name="HistoryMessagePcs">pièces.</string>
+    <string name="HistoryMessagePackByPack"> paquets.</string>
+    <string name="EmptySearchByArticleMessage">Cet article n\'est pas dans la base de données</string>
+    <string name="EmptySearchByNameMessage">Il n\'y a pas de résultats pour cette recherche</string>
+    <string name="ZeroValueInPiecesMessage">Il ne peut y avoir 0 pièces par paquet</string>
+    <string name="ZeroValueInVolumeMessage">Il ne peut y avoir 0 m2 par pack</string>
+    <string name="UploadedDataMessage">Les données sont téléchargées</string>
+</resources>

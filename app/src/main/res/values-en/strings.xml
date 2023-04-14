@@ -10,7 +10,7 @@
     <string name="CalculateByPiecesButton">Calculate by pieces</string>
     <string name="CalculateByPackButton">Calculate by packs</string>
     <string name="TileSquareTextView">Calculated square (multiplicity of a piece)</string>
-    <string name="PackagingBoxTextView">Quantity packages and pieces</string>
+    <string name="PackagingBoxTextView">Quantity of packages and pieces</string>
     <string name="PackInfoTextView">packages</string>
     <string name="TilesInfoNameTextView">pieces</string>
     <string name="ShowHistoryAndAddingButton">History and Adding</string>
@@ -37,6 +37,7 @@
     <string name="EmptyHistoryMessage">History is empty</string>
     <string name="EmptyFieldsMessage">Some fields are empty</string>
     <string name="AddedMessage">DATA ADDED</string>
+
     <string name="HistoryMessageFirst">For </string>
     <string name="HistoryMessageByM"> m2 multiple tiles, You need to write: </string>
     <string name="HistoryMessageByPackages"> m2 multiple of packages, You need to write</string>
