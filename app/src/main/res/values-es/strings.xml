@@ -1,4 +1,8 @@
 <resources>
+    <!--   File Name  -->
+    <string name="FileName">BoxType.txt</string>
+    <string name="LogFile">BCTLogs.txt</string>
+    <!-- For layout class -->
     <string name="app_name">Box Calculator Two</string>
     <string name="SearchFromTreeMapButton">Buscar</string>
     <string name="SearchByNameButton">Buscar por nombre</string>
@@ -50,4 +54,5 @@
     <string name="ZeroValueInPiecesMessage">No puede haber 0 piezas por paquete.</string>
     <string name="ZeroValueInVolumeMessage">No puede haber 0 m2 por pack</string>
     <string name="UploadedDataMessage">Datos cargado</string>
+    <string name="InvalidData">Datos inválidos proporcionados</string>
 </resources>

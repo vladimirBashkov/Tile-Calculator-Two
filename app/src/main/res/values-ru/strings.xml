@@ -1,4 +1,7 @@
 <resources>
+    <!--   File Name  -->
+    <string name="FileName">BoxType.txt</string>
+    <string name="LogFile">BCTLogs.txt</string>
     <!-- For layout class -->
     <string name="app_name">Box Calculator Two</string>
     <string name="SearchFromTreeMapButton">Найти</string>
@@ -12,8 +15,8 @@
     <string name="CalculateByPackButton">Расчет кратно упаковке</string>
     <string name="TileSquareTextView">Площадь кратно плиткам в большую сторону</string>
     <string name="PackagingBoxTextView">Количество упаковок и штук</string>
-    <string name="PackInfoTextView">УП</string>
-    <string name="TilesInfoNameTextView">ШТ</string>
+    <string name="PackInfoTextView">УП.</string>
+    <string name="TilesInfoNameTextView">ШТ.</string>
     <string name="ShowHistoryAndAddingButton">История и Добавление</string>
     <string name="ShowHistoryButton">История</string>
     <string name="DownloadButton">Загрузить данные</string>
@@ -39,8 +42,8 @@
     <string name="EmptyFieldsMessage">Не все поля заполнены</string>
     <string name="AddedMessage">ДАННЫЕ ДОБАВЛЕНЫ</string>
     <string name="HistoryMessageFirst">Для</string>
-    <string name="HistoryMessageByM"> м2 кратно плиткам, Вы должны записать: </string>
-    <string name="HistoryMessageByPackages"> м2 кратно упаковке, Вы должны записать:</string>
+    <string name="HistoryMessageByM"> м2 кратно штукам, Вы должны записать: </string>
+    <string name="HistoryMessageByPackages"> м2 кратно упаковкам, Вы должны записать:</string>
     <string name="HistoryMessageByPieces"> шт., Вы должны записать:</string>
     <string name="HistoryMessageSecond"> м2. Это </string>
     <string name="HistoryMessagePack"> уп. и </string>
@@ -51,4 +54,5 @@
     <string name="ZeroValueInPiecesMessage">В заводской упаковке не бывает 0 шт.</string>
     <string name="ZeroValueInVolumeMessage">В заводской упаковке не бывает 0 м2.</string>
     <string name="UploadedDataMessage">Данные выгружены</string>
+    <string name="InvalidData">Введены неверные данные</string>
 </resources>

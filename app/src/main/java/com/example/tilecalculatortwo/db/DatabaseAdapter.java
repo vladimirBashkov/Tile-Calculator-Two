@@ -79,8 +79,8 @@ public class DatabaseAdapter {
         String query = String.format("SELECT * FROM %s WHERE %s LIKE ? OR %s LIKE ? OR %s LIKE ?",
                 DatabaseHelper.TABLE, DatabaseHelper.COLUMN_NAME,
                 DatabaseHelper.COLUMN_VOLUME, DatabaseHelper.COLUMN_PIECES_IN_PACK);
-        Cursor cursor = database.rawQuery(query, new String[]{ String.valueOf("%" + text + "%"),
-                String.valueOf("%" + text + "%"), String.valueOf("%" + text + "%")});
+        Cursor cursor = database.rawQuery(query, new String[]{ ("%" + text + "%"),
+                ("%" + text + "%"), ("%" + text + "%")});
         if(cursor.moveToFirst()){
             do {
                 @SuppressLint("Range") int article = cursor.getInt(cursor.getColumnIndex(DatabaseHelper.COLUMN_ARTICLE));

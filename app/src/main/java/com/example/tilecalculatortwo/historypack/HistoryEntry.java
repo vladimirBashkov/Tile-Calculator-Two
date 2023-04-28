@@ -84,7 +84,7 @@ public class HistoryEntry implements Serializable{
 
     @Override
     public String toString() {
-        if(searchingType == SearchingType.BY_METHER){
+        if(searchingType == SearchingType.BY_METER){
             String name = boxName.isEmpty()? "" : boxName + "\n";
             return name + firstMessage + " " +
                     searchingData + " " + messageBy + " " +
@@ -92,7 +92,7 @@ public class HistoryEntry implements Serializable{
                     boxCount + " " + messagePack + " " +
                     tilesCount + " " + messagePcs;
         }
-        if(searchingType == SearchingType.BY_METHER_AND_BY_PACK){
+        if(searchingType == SearchingType.BY_METER_AND_BY_PACK){
             String name = boxName.isEmpty()? "" : boxName + "\n";
             return name + firstMessage + " " +
                     searchingData + " " + messageBy + " " +

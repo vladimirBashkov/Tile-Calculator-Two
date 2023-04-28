@@ -6,6 +6,7 @@ import android.Manifest;
 import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.content.res.Configuration;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.view.View;
@@ -28,7 +29,7 @@ import java.util.ArrayList;
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
 
     String SEPARATOR = "~";
-    private static final String LOGS_FILE = "TCTLogs.txt";
+    private static final String LOGS_FILE = "BCTLogs.txt";
     private static final String BUTTON_COLOR_CALCULATE_BY_M = "#8BC34A";
     private static final String BUTTON_COLOR_CALCULATE_BY_PIECES = "#FFEB3B";
     private static final String BUTTON_COLOR_CALCULATE_BY_PACK = "#999EFF";
@@ -111,7 +112,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         }
         if(view.getId() == R.id.ShowHistory){
             Intent intent = new Intent(this, HistoryAndAdd.class);
-            intent.addFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
             intent.putExtra(HistoryArray.class.getSimpleName(), historyArray);
             startActivity(intent);
         }
@@ -126,22 +126,28 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 Box box = adapter.getBox(art);
                 selectedSpinner.setVisibility(View.INVISIBLE);
                 infoAboutTile.setVisibility(View.VISIBLE);
-                infoAboutTile.setText(box.getName());
-                boxSquare.setText(Double.toString(box.getVolume()));
-                tilesInBox.setText(Integer.toString(box.getPiecesInPack()));
+                setInfoAboutTile(box.getName());
+                setBoxSquareAndTilesInBox(Double.toString(box.getVolume()),
+                        Integer.toString(box.getPiecesInPack()));
             } else {
-                Toast.makeText(this, getResources().getString(R.string.EmptySearchByArticleMessage), Toast.LENGTH_SHORT).show();
+                infoAboutTile.setText("");
+                selectedSpinner.setVisibility(View.INVISIBLE);
+                Toast.makeText(this, getResources().getString(R.string.EmptySearchByArticleMessage),
+                        Toast.LENGTH_SHORT).show();
             }
             adapter.close();
+        } else {
+            Toast.makeText(this, getResources().getString(R.string.InvalidData),
+                    Toast.LENGTH_SHORT).show();
         }
     }
 
     public void searchByName(){
-        String name = searchingText.getText().toString();
-        int nameLength = name.length();
-        if(nameLength > 0){
+        String name = searchingText.getText().toString().trim();
+        if(name.length() > 0){
             adapter.open();
             ArrayList<Box> boxList = adapter.getBox(name);
+            adapter.close();
             if(boxList.size() > 0){
                 ArrayList<String> selectedString = new ArrayList<>();
                 ArrayList<String> tilesInfo = new ArrayList<>();
@@ -150,13 +156,16 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                     selectedString.add(box.getName());
                     tilesInfo.add(box.getVolume() + SEPARATOR + box.getPiecesInPack());
                 }
-                if (!selectedString.isEmpty()) {
-                    setSpinner(selectedString, tilesInfo);
-                } else {
-                    Toast.makeText(this, getResources().getString(R.string.EmptySearchByNameMessage), Toast.LENGTH_LONG).show();
-                }
+                setSpinner(selectedString, tilesInfo);
+            } else {
+                infoAboutTile.setText("");
+                selectedSpinner.setVisibility(View.INVISIBLE);
+                infoAboutTile.setVisibility(View.INVISIBLE);
+                Toast.makeText(this, getResources().getString(R.string.EmptySearchByNameMessage),
+                        Toast.LENGTH_SHORT).show();
             }
-            adapter.close();
+        } else {
+            Toast.makeText(this, getResources().getString(R.string.InvalidData), Toast.LENGTH_SHORT).show();
         }
     }
 
@@ -197,10 +206,26 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     }
 
     public void calculateSquareByM(){
-        int buttonColor = Color.parseColor(BUTTON_COLOR_CALCULATE_BY_M);
-        setBackgroundEditText(buttonColor,
-                buttonColor, buttonColor,0);
-        if(!checkData(searchingSquad)){
+        if(!checkDarkTheme()){
+            int buttonColor = Color.parseColor(BUTTON_COLOR_CALCULATE_BY_M);
+            setBackgroundEditText(buttonColor,
+                    buttonColor, buttonColor,0);
+        }
+        if(searchingSquad.getText().toString().isEmpty() ||
+            boxSquare.getText().toString().isEmpty() ||
+            tilesInBox.getText().toString().isEmpty()){
+            Toast.makeText(this, getResources().getString(R.string.EmptyFieldsMessage),
+                    Toast.LENGTH_LONG).show();
+            return;
+        }
+        if(!checkZero(boxSquare)){
+            Toast.makeText(this, getResources().getString(R.string.ZeroValueInVolumeMessage),
+                    Toast.LENGTH_SHORT).show();
+            return;
+        }
+        if(!checkZero(tilesInBox)){
+            Toast.makeText(this, getResources().getString(R.string.ZeroValueInPiecesMessage),
+                    Toast.LENGTH_SHORT).show();
             return;
         }
         String box = boxSquare.getText().toString();
@@ -210,10 +235,26 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     }
 
     public void calculateSquareByPieces(){
-        int buttonColor = Color.parseColor(BUTTON_COLOR_CALCULATE_BY_PIECES);
-        setBackgroundEditText(buttonColor, buttonColor,
-                0,buttonColor);
-        if(!checkData(searchingTiles)){
+        if(!checkDarkTheme()){
+            int buttonColor = Color.parseColor(BUTTON_COLOR_CALCULATE_BY_PIECES);
+            setBackgroundEditText(buttonColor, buttonColor,
+                    0,buttonColor);
+        }
+        if(searchingTiles.getText().toString().isEmpty() ||
+                boxSquare.getText().toString().isEmpty() ||
+                tilesInBox.getText().toString().isEmpty()){
+            Toast.makeText(this, getResources().getString(R.string.EmptyFieldsMessage),
+                    Toast.LENGTH_LONG).show();
+            return;
+        }
+        if(!checkZero(boxSquare)){
+            Toast.makeText(this, getResources().getString(R.string.ZeroValueInVolumeMessage),
+                    Toast.LENGTH_SHORT).show();
+            return;
+        }
+        if(!checkZero(tilesInBox)){
+            Toast.makeText(this, getResources().getString(R.string.ZeroValueInPiecesMessage),
+                    Toast.LENGTH_SHORT).show();
             return;
         }
         String box = boxSquare.getText().toString();
@@ -224,10 +265,20 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     }
 
     public void calculateSquareByPack(){
-        int buttonColor = Color.parseColor(BUTTON_COLOR_CALCULATE_BY_PACK);
-        setBackgroundEditText(buttonColor, 0,
-                buttonColor,0);
-        if(!checkBoxAndSquare(searchingSquad)){
+        if(!checkDarkTheme()){
+            int buttonColor = Color.parseColor(BUTTON_COLOR_CALCULATE_BY_PACK);
+            setBackgroundEditText(buttonColor, 0,
+                    buttonColor,0);
+        }
+        if(searchingSquad.getText().toString().isEmpty() ||
+                boxSquare.getText().toString().isEmpty()){
+            Toast.makeText(this, getResources().getString(R.string.EmptyFieldsMessage),
+                    Toast.LENGTH_LONG).show();
+            return;
+        }
+        if(!checkZero(boxSquare)){
+            Toast.makeText(this, getResources().getString(R.string.ZeroValueInVolumeMessage),
+                    Toast.LENGTH_SHORT).show();
             return;
         }
         String box = boxSquare.getText().toString();
@@ -244,36 +295,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         searchingTiles.setBackgroundColor(searchingTi);
     }
 
-    private boolean checkData(EditText editText){
-        String countTiles = tilesInBox.getText().toString();
-        if(!checkBoxAndSquare(editText)){
-            return false;
-        } else if(countTiles.isEmpty()){
-            Toast.makeText(this, getResources().getString(R.string.EmptyFieldsMessage),
-                    Toast.LENGTH_LONG).show();
-            return false;
-        }
-        int countT = Integer.parseInt(countTiles);
-        if (countT == 0){
-            Toast.makeText(this, getResources().getString(R.string.ZeroValueInPiecesMessage),
-                    Toast.LENGTH_LONG).show();
-            return false;
-        }
-        return true;
-    }
-
-    private boolean checkBoxAndSquare(EditText editText){
-        String box = boxSquare.getText().toString();
-        String search = editText.getText().toString();
-        if(box.isEmpty() || search.isEmpty()){
-            Toast.makeText(this, getResources().getString(R.string.EmptyFieldsMessage),
-                    Toast.LENGTH_LONG).show();
-            return false;
-        }
-        double boxCheck = Double.parseDouble(box);
-        if(Double.compare(boxCheck, 0D) == 0){
-            Toast.makeText(this, getResources().getString(R.string.ZeroValueInVolumeMessage),
-                    Toast.LENGTH_LONG).show();
+    private boolean checkZero(EditText editText){
+        String text = editText.getText().toString();
+        double number = Double.parseDouble(text.trim());
+        if(number == 0){
             return false;
         }
         return true;
@@ -292,5 +317,13 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         } catch(IOException ex) {
             Toast.makeText(this, ex.getMessage(), Toast.LENGTH_SHORT).show();
         }
+    }
+
+    private boolean checkDarkTheme(){
+        int nightModeFlags = getResources().getConfiguration().uiMode&Configuration.UI_MODE_NIGHT_MASK;
+        if(nightModeFlags == Configuration.UI_MODE_NIGHT_YES){
+            return true;
+        }
+        return false;
     }
 }

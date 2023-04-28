@@ -26,10 +26,14 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
+import java.util.Calendar;
 
 public class HistoryAndAdd extends AppCompatActivity  implements View.OnClickListener{
-    String SEPARATOR = "~";
+    private static final String SEPARATOR = "~";
+    private static final String FILE_NAME = "tilesType.txt";
+    private static final String LOGS_FILE = "BCTLogs.txt";
     private static final int READ_REQUEST_CODE = 42;
+    private static final int NUMBER_OF_RECORDS_TO_BE_DISPLAYED = 5;
     TextView articleTextView;
     TextView descriptionTextView;
     TextView boxVolumeTextView;
@@ -39,10 +43,9 @@ public class HistoryAndAdd extends AppCompatActivity  implements View.OnClickLis
     EditText boxVolumeAdd;
     EditText tilesCounterAdd;
     TextView historyText;
-    private static final String FILE_NAME = "tilesType.txt";
-    private static final String LOGS_FILE = "TCTLogs.txt";
-    HistoryArray historyArray;
+    HistoryArray historyArray = new HistoryArray();
     private DatabaseAdapter adapter;
+    private boolean historyVisible = false;
 
 
     @SuppressLint("MissingInflatedId")
@@ -113,19 +116,20 @@ public class HistoryAndAdd extends AppCompatActivity  implements View.OnClickLis
         if(!history.isEmpty()){
             setHistoryVisible(true);
             StringBuilder sb = new StringBuilder();
-            if(history.size() > 10){
-                for (int i = history.size()-1; i >= history.size()-5 ; i--) {
+            if(history.size() > NUMBER_OF_RECORDS_TO_BE_DISPLAYED){
+                for (int i = history.size()-1; i >= history.size()-NUMBER_OF_RECORDS_TO_BE_DISPLAYED ; i--) {
                     sb.append(history.get(i));
-                    sb.append("\n");
+                    sb.append("\n--------------------------\n");
                 }
             } else {
                 for (int i = history.size()-1; i >= 0; i--) {
                     sb.append(history.get(i));
-                    sb.append("\n");
+                    sb.append("\n--------------------------\n");
                 }
             }
             historyText.setText(sb);
         } else {
+            setHistoryVisible(true);
             Toast.makeText(this, getResources().getString(R.string.EmptyHistoryMessage), Toast.LENGTH_SHORT).show();
         }
     }
@@ -141,6 +145,7 @@ public class HistoryAndAdd extends AppCompatActivity  implements View.OnClickLis
             descriptionAdd.setVisibility(View.INVISIBLE);
             boxVolumeAdd.setVisibility(View.INVISIBLE);
             tilesCounterAdd.setVisibility(View.INVISIBLE);
+            historyVisible = true;
         } else{
             historyText.setVisibility(View.INVISIBLE);
             articleTextView.setVisibility(View.VISIBLE);
@@ -151,44 +156,49 @@ public class HistoryAndAdd extends AppCompatActivity  implements View.OnClickLis
             descriptionAdd.setVisibility(View.VISIBLE);
             boxVolumeAdd.setVisibility(View.VISIBLE);
             tilesCounterAdd.setVisibility(View.VISIBLE);
+            historyVisible = false;
         }
     }
 
     private void addArticle(){
-        setHistoryVisible(false);
-        String article = articleAdd.getText().toString();
-        String name = descriptionAdd.getText().toString();
-        String boxVolume = boxVolumeAdd.getText().toString();
-        String tilesInBox = tilesCounterAdd.getText().toString();
-        if(article.isEmpty() || name.isEmpty() || boxVolume.isEmpty() || tilesInBox.isEmpty()){
-            Toast.makeText(this, getResources().getString(R.string.EmptyFieldsMessage), Toast.LENGTH_SHORT).show();
-            return;
+        if(historyVisible){
+            setHistoryVisible(false);
+        } else {
+            String article = articleAdd.getText().toString();
+            String name = descriptionAdd.getText().toString();
+            String boxVolume = boxVolumeAdd.getText().toString();
+            String tilesInBox = tilesCounterAdd.getText().toString();
+            if(article.isEmpty() || name.isEmpty() || boxVolume.isEmpty() || tilesInBox.isEmpty()){
+                Toast.makeText(this, getResources().getString(R.string.EmptyFieldsMessage), Toast.LENGTH_SHORT).show();
+                return;
+            }
+            if(name.contains(SEPARATOR)){
+                name = name.replace(SEPARATOR, "-");
+            }
+            if(Double.parseDouble(boxVolume) == 0){
+                Toast.makeText(this, getResources().getString(R.string.ZeroValueInVolumeMessage),
+                        Toast.LENGTH_SHORT).show();
+                return;
+            }
+            if(Integer.parseInt(tilesInBox) == 0){
+                Toast.makeText(this, getResources().getString(R.string.ZeroValueInPiecesMessage),
+                        Toast.LENGTH_SHORT).show();
+                return;
+            }
+            Box box = new Box(Integer.parseInt(article), name,
+                    Double.parseDouble(boxVolume), Integer.parseInt(tilesInBox));
+            adapter.open();
+            save(box);
+            adapter.close();
+            Toast.makeText(this, getResources().getString(R.string.AddedMessage), Toast.LENGTH_SHORT).show();
+            articleAdd.setText("");
+            descriptionAdd.setText("");
+            boxVolumeAdd.setText("");
+            tilesCounterAdd.setText("");
+            writeLog(getResources().getString(R.string.AddedMessage) + " - " + article + " - " +
+                    name + " - " + boxVolume + " - " + tilesInBox + "\n");
         }
-        if(name.contains(SEPARATOR)){
-            name = name.replace(SEPARATOR, "-");
-        }
-        if(Double.parseDouble(boxVolume) == 0){
-            Toast.makeText(this, getResources().getString(R.string.ZeroValueInVolumeMessage),
-                    Toast.LENGTH_SHORT).show();
-            return;
-        }
-        if(Integer.parseInt(tilesInBox) == 0){
-            Toast.makeText(this, getResources().getString(R.string.ZeroValueInPiecesMessage),
-                    Toast.LENGTH_SHORT).show();
-            return;
-        }
-        Box box = new Box(Integer.parseInt(article), name,
-                Double.parseDouble(boxVolume), Integer.parseInt(tilesInBox));
-        adapter.open();
-        save(box);
-        adapter.close();
-        Toast.makeText(this, getResources().getString(R.string.AddedMessage), Toast.LENGTH_SHORT).show();
-        articleAdd.setText("");
-        descriptionAdd.setText("");
-        boxVolumeAdd.setText("");
-        tilesCounterAdd.setText("");
-        writeLog(getResources().getString(R.string.AddedMessage) + " - " +article + " - " +
-                name + " - " + boxVolume + " - " + tilesInBox);
+
     }
 
     public void save(Box box){
@@ -227,7 +237,7 @@ public class HistoryAndAdd extends AppCompatActivity  implements View.OnClickLis
                     }
                     readTxtData(total.toString());
                 } catch (Exception e) {
-                    writeLog(e.getMessage());
+                    writeLog(e.getMessage() + "\n");
                 }
             }
         }
@@ -236,22 +246,31 @@ public class HistoryAndAdd extends AppCompatActivity  implements View.OnClickLis
 
     private void readTxtData(String text){
         boolean isAdded = false;
+        int counter = 0;
         if(text.isEmpty()){
             return;
         }
         String[] strings = text.split("\n");
         adapter.open();
         for (String line : strings) {
+            if(line.isEmpty()){
+                continue;
+            }
             Box box = writeArticleToDB(line);
             if (box != null) {
                 save(box);
+                counter++;
                 isAdded = true;
+            } else {
+                writeLog(getResources().getString(R.string.InvalidData) + " - " + line + "\n");
             }
         }
         adapter.close();
         if(isAdded){
             Toast.makeText(this, getResources().getString(R.string.AddedMessage), Toast.LENGTH_SHORT).show();
         }
+        writeLog(getResources().getString(R.string.AddedMessage) + " - " +
+                counter + " - " + getResources().getString(R.string.ArticleTextView) + "\n");
     }
 
     private Box writeArticleToDB(String line){
@@ -303,8 +322,10 @@ public class HistoryAndAdd extends AppCompatActivity  implements View.OnClickLis
             FileOutputStream fos = new FileOutputStream(file);
             fos.write(text.getBytes());
             Toast.makeText(this, getResources().getString(R.string.UploadedDataMessage), Toast.LENGTH_SHORT).show();
+            writeLog(getResources().getString(R.string.UploadedDataMessage) + " - " +
+                    Calendar.getInstance().getTime() + "\n");
         } catch(IOException ex) {
-            writeLog(ex.getMessage());
+            writeLog(ex.getMessage() + "\n");
             Toast.makeText(this, ex.getMessage(), Toast.LENGTH_SHORT).show();
         }
     }

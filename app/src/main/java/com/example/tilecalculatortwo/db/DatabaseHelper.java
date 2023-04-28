@@ -6,7 +6,7 @@ import android.database.sqlite.SQLiteOpenHelper;
 
 public class DatabaseHelper extends SQLiteOpenHelper {
     private static final String DATABASE_NAME = "boxcalculator.db";
-    private static final int SCHEMA = 1; // версия базы данных
+    private static final int SCHEMA = 1; // DB version
     static final String TABLE = "boxes";
     public static final String COLUMN_ARTICLE = "article";
     public static final String COLUMN_NAME = "name";
