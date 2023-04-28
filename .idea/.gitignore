@@ -3,3 +3,5 @@
 /workspace.xml
 *.gitignore
 /idea/
+/app/src/main/res/
+/gradle/
