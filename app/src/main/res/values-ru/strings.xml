@@ -26,6 +26,21 @@
     <string name="ArticleTextView">Артикул</string>
     <string name="DescriptionBoxTextView">Описание</string>
     <string name="ShowHelpButton">Показать пример ТХТ файла</string>
+    <string name="ToDrawButton">Графика</string>
+
+    <!-- For layout tile calculator -->
+    <string name="AreaLengthText">Длинна (M2)</string>
+    <string name="AreaWidthText">Ширина (M2)</string>
+    <string name="TileLengthText">Длинна плиты (см.)</string>
+    <string name="TileWidthText">Ширина плиты (см.)</string>
+    <string name="OffsetText">Смещение</string>
+    <string name="CenteringSwitch">Центрирование</string>
+    <string name="UsingRemnantSwitch">Использовать остаток</string>
+    <string name="AlongLongSideSwitch">Вдоль длинной стены</string>
+    <string name="SearchTilesByAreaButton">Расчитать</string>
+    <string name="SearchTilesResultText">Результат (шт.)</string>
+    <string name="BackButton">Назад</string>
+    <string name="ShowPlanButton">Показать план</string>
 
     <!-- For java class -->
     <string name="ExampleOfFillingText">
@@ -55,4 +70,5 @@
     <string name="ZeroValueInVolumeMessage">В заводской упаковке не бывает 0 м2.</string>
     <string name="UploadedDataMessage">Данные выгружены</string>
     <string name="InvalidData">Введены неверные данные</string>
+    <string name="UnknownData">Извините, но пока мы не можем это посчитать.</string>
 </resources>

@@ -26,6 +26,21 @@
     <string name="ArticleTextView">Article</string>
     <string name="DescriptionBoxTextView">Description</string>
     <string name="ShowHelpButton">Afficher un exemple de remplissage de texte</string>
+    <string name="ToDrawButton">Dessin</string>
+
+    <!-- For layout tile calculator -->
+    <string name="AreaLengthText">Afficher le forfait (M2)</string>
+    <string name="AreaWidthText">Largeur de zone (M2)</string>
+    <string name="TileLengthText">Longueur de tuile (cm.)</string>
+    <string name="TileWidthText">Largeur de tuile (cm.)</string>
+    <string name="OffsetText">Offset en pourcentage (%)</string>
+    <string name="CenteringSwitch">Centrage</string>
+    <string name="UsingRemnantSwitch">Utiliser le reste</string>
+    <string name="AlongLongSideSwitch">Le long du côté long</string>
+    <string name="SearchTilesByAreaButton">Recherche</string>
+    <string name="SearchTilesResultText">Résultat (pcs)</string>
+    <string name="BackButton">Retour</string>
+    <string name="ShowPlanButton">Afficher le forfait</string>
 
     <!-- For java class -->
     <string name="ExampleOfFillingText">
@@ -55,4 +70,5 @@
     <string name="ZeroValueInVolumeMessage">Il ne peut y avoir 0 m2 par pack</string>
     <string name="UploadedDataMessage">Les données sont téléchargées</string>
     <string name="InvalidData">Données invalides fournies</string>
+    <string name="UnknownData">Je suis désolé mais nous ne pouvons pas encore le comprendre.</string>
 </resources>

@@ -85,12 +85,14 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         Button calculateByTiles = findViewById(R.id.CalculateByPieces);
         Button calculateByPack = findViewById(R.id.CalculateByPack);
         Button showHistory = findViewById(R.id.ShowHistory);
+        Button toDraw = findViewById(R.id.ToDrawButton);
         searchFromTreeMap.setOnClickListener(this);
         searchByName.setOnClickListener(this);
         calculateByTiles.setOnClickListener(this);
         calculateByM.setOnClickListener(this);
         calculateByPack.setOnClickListener(this);
         showHistory.setOnClickListener(this);
+        toDraw.setOnClickListener(this);
     }
 
     @Override
@@ -113,6 +115,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         if(view.getId() == R.id.ShowHistory){
             Intent intent = new Intent(this, HistoryAndAdd.class);
             intent.putExtra(HistoryArray.class.getSimpleName(), historyArray);
+            startActivity(intent);
+        }
+        if(view.getId() == R.id.ToDrawButton){
+            Intent intent = new Intent(this, TileCalculatorActivity.class);
             startActivity(intent);
         }
     }
