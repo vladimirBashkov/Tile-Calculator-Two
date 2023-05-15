@@ -9,6 +9,9 @@ import android.graphics.Rect;
 import android.os.Bundle;
 import android.view.View;
 
+import java.math.BigDecimal;
+import java.math.RoundingMode;
+
 public class DrawActivity extends AppCompatActivity {
     DrawingInformation dI;
 
@@ -131,84 +134,127 @@ public class DrawActivity extends AppCompatActivity {
                                                 double width, double length, double tileLength, double tileWidth,
                                                 int left, int top, int right, int bottom, Double step, boolean centering, boolean useRest) {
             if(alongLongSide){
-                int rowsOfTiles = (int)(width/tileWidth);
-                double row = length/tileLength;
-                int piecesInRow = (int) row;
-                double centeringStep = 0;
-                if(centering && row-piecesInRow != 0.0){
-                    centeringStep = (1.0 + row-piecesInRow)/2;
+                BigDecimal lengthBD = new BigDecimal(length);
+                BigDecimal widthBD = new BigDecimal(width);
+                BigDecimal tileLengthBD = new BigDecimal(tileLength);
+                BigDecimal tileWidthBD = new BigDecimal(tileWidth);
+                BigDecimal rowsOfTilesBD = widthBD.divide(tileWidthBD, 0, RoundingMode.UP);
+                BigDecimal tilesInRowBD = lengthBD.divide(tileLengthBD, 0, RoundingMode.HALF_UP);
+                if(tilesInRowBD.compareTo(lengthBD.divide(tileLengthBD, 9, RoundingMode.HALF_UP))<0){
+                    tilesInRowBD = tilesInRowBD.add(new BigDecimal("1"));
                 }
-                double rest = 0;
-                int stepBefore = 0;
-                for (int i = 0; i <= rowsOfTiles + 1; i++) {
-                    for (int j = 0; j <= piecesInRow + 1; j++) {
-                        if(j == 0){
-                            stepBefore = stepBefore + (int) (step*tileLength*usingRatio);
-                            if(i==0){
-                                stepBefore =0;
-                            }
-                            int xPointOne = right - (int) (tileWidth*usingRatio*(i+1));
-                            int xPointTwo = right - (int) (tileWidth*usingRatio*(i));
-                            int yPointOne = top + (int) ((tileLength*(j + centeringStep) + rest)*usingRatio) + stepBefore;
-                            Rect rect = new Rect(xPointOne, top, xPointTwo, yPointOne);
-                            canvas.drawRect(rect,  p);
-                        }
-
-                        int xPointOne = right - (int) (tileWidth*usingRatio*(i+1));
-                        int yPointOne = top + (int) ((tileLength*(j + centeringStep) + rest)*usingRatio) + stepBefore;
-                        int xPointTwo = right - (int) (tileWidth*usingRatio*(i));
-                        int yPointTwo  = top + (int) ((tileLength*(j + 1 + centeringStep) + rest)*usingRatio)+ stepBefore;
-
+                BigDecimal centeringStepBD = new BigDecimal("0");
+                BigDecimal stepBD = new BigDecimal(step);
+                BigDecimal usingRatioBD = new BigDecimal(usingRatio);
+                if(centering){
+                    centeringStepBD = lengthBD.divide(tileLengthBD, 9, RoundingMode.HALF_UP)
+                            .subtract(tilesInRowBD.subtract(new BigDecimal("1")))
+                            .add(new BigDecimal("1")).divide(new BigDecimal("2"));
+                }
+                BigDecimal restBD = new BigDecimal("0");
+                BigDecimal stepBeforeBD = new BigDecimal("0");
+                BigDecimal stepX = tileWidthBD.multiply(usingRatioBD);
+                BigDecimal stepY = tileLengthBD.multiply(usingRatioBD);
+                for (int i = 0; i < rowsOfTilesBD.intValue(); i++) {
+                    stepBeforeBD = stepBeforeBD.add(stepBD);
+                    if(i==0){
+                        stepBeforeBD = new BigDecimal("0");
+                    }
+                    if (stepBeforeBD.multiply(tileLengthBD).compareTo(tileLengthBD) > 0){
+                        stepBeforeBD = stepBeforeBD
+                                .subtract(stepBeforeBD.divide(tileLengthBD, 0, RoundingMode.DOWN));
+                    }
+                    BigDecimal addForRest = centeringStepBD.add(restBD).add(stepBeforeBD);
+                    for (int j = 0; j < tilesInRowBD.intValue(); j++) {
+                        int xPointOne = right - stepX.multiply(new BigDecimal(i+1)).intValue();
+                        int yPointOne = top + stepY
+                                .multiply(addForRest.add(new BigDecimal(j))).intValue();
+                        yPointOne = Math.min(yPointOne, bottom);
+                        int xPointTwo = right - stepX.multiply(new BigDecimal(i)).intValue();
+                        int yPointTwo  = top + stepY
+                                .multiply(addForRest.add(new BigDecimal(j+1))).intValue();
+                        yPointTwo = Math.min(yPointTwo, bottom);
                         Rect rect = new Rect(xPointOne, yPointOne, xPointTwo, yPointTwo);
                         canvas.drawRect(rect,  p);
-                        if(useRest && j==piecesInRow){
-                            rest = ((int) ((length - rest)/tileLength)) * tileLength + rest - length;
+                        if (j == 0){
+                            int yPointOneRect = top + stepY
+                                    .multiply(addForRest).intValue();
+                            rect = new Rect(xPointOne, top, xPointTwo, yPointOneRect);
+                            canvas.drawRect(rect,  p);
                         }
                     }
-                    if(stepBefore > (int) (tileLength*usingRatio*0.95)){
-                        stepBefore = stepBefore - (int) (tileLength*usingRatio);
+                    if(useRest){
+                        BigDecimal restLengthBD = tileLengthBD.multiply(tilesInRowBD)
+                                .add(restBD.multiply(tileLengthBD)).subtract(lengthBD);
+                        if(restLengthBD.compareTo(tileLengthBD)>0){
+                            restLengthBD = restLengthBD.subtract(tileLengthBD.multiply(restLengthBD.divide(tileLengthBD,0, RoundingMode.DOWN)));
+                        }
+                        restBD = restLengthBD.divide(tileLengthBD, 9, RoundingMode.HALF_UP);
                     }
                 }
                 backgroundPainting(canvas, left, top, right, bottom);
 
             } else {
-                int piecesInRow = (int)(width/tileLength);
-                double row = width/tileLength;
-                int rowsOfTiles = (int)(length/tileWidth);
-                double centeringStep = 0;
-                if(centering && row-piecesInRow != 0.0){
-                    centeringStep = (1.0 + row-piecesInRow)/2;
+                BigDecimal lengthBD = new BigDecimal(length);
+                BigDecimal widthBD = new BigDecimal(width);
+                BigDecimal tileLengthBD = new BigDecimal(tileLength);
+                BigDecimal tileWidthBD = new BigDecimal(tileWidth);
+                BigDecimal rowsOfTilesBD = lengthBD.divide(tileWidthBD, 0, RoundingMode.UP);
+                BigDecimal tilesInRowBD = widthBD.divide(tileLengthBD, 0, RoundingMode.HALF_UP);
+                if(tilesInRowBD.compareTo(widthBD.divide(tileLengthBD, 9, RoundingMode.HALF_UP))<0){
+                    tilesInRowBD = tilesInRowBD.add(new BigDecimal("1"));
                 }
-                double rest = 0;
-                int stepBefore = 0;
-                for (int i = 0; i <= rowsOfTiles + 1; i++) {
-                    for (int j = 0; j <= piecesInRow + 1; j++) {
-                        if(j == 0){
-                            stepBefore = stepBefore + (int) (step*tileLength*usingRatio);
-                            if(i==0){
-                                stepBefore =0;
-                            }
-                            int yPointOne = top + (int) (tileWidth*usingRatio*(i));
-                            int xPointTwo = left + (int) ((tileLength*(j + 1 + centeringStep) + rest)*usingRatio) + stepBefore;
-                            int yPointTwo = top + (int) (tileWidth*usingRatio*(i+1)) ;
-                            Rect rect = new Rect(left, yPointOne, xPointTwo, yPointTwo);
-                            canvas.drawRect(rect, p);
-                        }
-                        int xPointOne = left + (int) ((tileLength*(j + centeringStep) + rest)*usingRatio) + stepBefore;
-                        int yPointOne = top + (int) (tileWidth*usingRatio*(i));
-                        int xPointTwo = left + (int) ((tileLength*(j + 1 + centeringStep) + rest)*usingRatio) + stepBefore;
-                        int yPointTwo  = top + (int) (tileWidth*usingRatio*(i+1));
+                BigDecimal centeringStepBD = new BigDecimal("0");
+                BigDecimal stepBD = new BigDecimal(step);
+                BigDecimal usingRatioBD = new BigDecimal(usingRatio);
+                if(centering){
+                    centeringStepBD = widthBD.divide(tileLengthBD, 9, RoundingMode.HALF_UP)
+                            .subtract(tilesInRowBD.subtract(new BigDecimal("1")))
+                            .add(new BigDecimal("1")).divide(new BigDecimal("2"));
+                }
+                BigDecimal restBD = new BigDecimal("0");
+                BigDecimal stepBeforeBD = new BigDecimal("0");
+                BigDecimal stepX = tileLengthBD.multiply(usingRatioBD);
+                BigDecimal stepY = tileWidthBD.multiply(usingRatioBD);
+                for (int i = 0; i < rowsOfTilesBD.intValue(); i++) {
+                    stepBeforeBD = stepBeforeBD.add(stepBD);
+                    if(i==0){
+                        stepBeforeBD = new BigDecimal("0");
+                    }
+                    if (stepBeforeBD.multiply(tileLengthBD).compareTo(tileLengthBD) > 0){
+                        stepBeforeBD = stepBeforeBD
+                                .subtract(stepBeforeBD.divide(tileLengthBD, 0, RoundingMode.DOWN));
+                    }
+                    BigDecimal addForRest = centeringStepBD.add(restBD).add(stepBeforeBD);
+                    for (int j = 0; j < tilesInRowBD.intValue(); j++) {
+                        int xPointOne = left + stepX.multiply(addForRest.add(new BigDecimal(j))).intValue();
+                        int yPointOne = top + stepY
+                                .multiply((new BigDecimal(i))).intValue();
+                        xPointOne = Math.min(xPointOne, right);
+                        int xPointTwo = left + stepX.multiply(addForRest.add(new BigDecimal(j+1))).intValue();
+                        int yPointTwo  = top + stepY
+                                .multiply(new BigDecimal(i+1)).intValue();
+                        xPointTwo = Math.min(xPointTwo, bottom);
                         Rect rect = new Rect(xPointOne, yPointOne, xPointTwo, yPointTwo);
-                        canvas.drawRect(rect, p);
-                        if(useRest && j==piecesInRow){
-                            rest = ((int) ((width - rest)/tileLength)) * tileLength + rest - width;
+                        canvas.drawRect(rect,  p);
+                        if (j == 0){
+                            int xPointOneRect = left + stepX
+                                    .multiply(addForRest).intValue();
+                            rect = new Rect(left, yPointOne, xPointOneRect, yPointOne);
+                            canvas.drawRect(rect,  p);
                         }
                     }
-                    if(stepBefore > (int) (tileLength*usingRatio*0.95)){
-                        stepBefore = stepBefore - (int) (tileLength*usingRatio);
+                    if(useRest){
+                        BigDecimal restLengthBD = tileLengthBD.multiply(tilesInRowBD)
+                                .add(restBD.multiply(tileLengthBD)).subtract(widthBD);
+                        if(restLengthBD.compareTo(tileLengthBD)>0){
+                            restLengthBD = restLengthBD.subtract(tileLengthBD.multiply(restLengthBD.divide(tileLengthBD,0, RoundingMode.DOWN)));
+                        }
+                        restBD = restLengthBD.divide(tileLengthBD, 9, RoundingMode.HALF_UP);
                     }
                 }
                 backgroundPainting(canvas, left, top, right, bottom);
+
             }
         }
         private void backgroundPainting(Canvas canvas, int left, int top, int right, int bottom){

@@ -33,7 +33,7 @@
     <string name="AreaWidthText">Ширина (M2)</string>
     <string name="TileLengthText">Длинна плиты (см.)</string>
     <string name="TileWidthText">Ширина плиты (см.)</string>
-    <string name="OffsetText">Смещение</string>
+    <string name="OffsetText">Смещение (%)</string>
     <string name="CenteringSwitch">Центрирование</string>
     <string name="UsingRemnantSwitch">Использовать остаток</string>
     <string name="AlongLongSideSwitch">Вдоль длинной стены</string>

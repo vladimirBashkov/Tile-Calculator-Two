@@ -254,7 +254,7 @@ public class TileCalculatorActivity extends AppCompatActivity implements View.On
             } else if( i == 66){
                 offset = 0.667;
             } else {
-                offset = i/100d;
+                offset = i/100.0;
             }
         }
         return new DrawingInformation(areaLength, areaWidth,
