@@ -29,9 +29,9 @@
     <string name="ToDrawButton">Графика</string>
 
     <!-- For layout tile calculator -->
-    <string name="AreaLengthText">Длинна (M2)</string>
+    <string name="AreaLengthText">Длина (M2)</string>
     <string name="AreaWidthText">Ширина (M2)</string>
-    <string name="TileLengthText">Длинна плиты (см.)</string>
+    <string name="TileLengthText">Длина плиты (см.)</string>
     <string name="TileWidthText">Ширина плиты (см.)</string>
     <string name="OffsetText">Смещение (%)</string>
     <string name="CenteringSwitch">Центрирование</string>
