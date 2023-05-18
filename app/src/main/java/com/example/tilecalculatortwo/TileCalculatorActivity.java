@@ -1,7 +1,6 @@
 package com.example.tilecalculatortwo;
 
 import androidx.appcompat.app.AppCompatActivity;
-
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
@@ -15,9 +14,13 @@ import java.math.BigDecimal;
 import java.math.RoundingMode;
 
 public class TileCalculatorActivity extends AppCompatActivity implements View.OnClickListener{
+    BigDecimal oneBD = new BigDecimal("1.0");
+    BigDecimal halfOneBD = new BigDecimal("0.5");
+    BigDecimal zeroBD = new BigDecimal("0");
     private boolean centering;
     private boolean usingRemnant;
     private boolean alongLongSide;
+    private boolean isLaminate;
     private EditText areaLengthInsert;
     private EditText areaWidthInsert;
     private EditText tileLengthInsert;
@@ -27,6 +30,7 @@ public class TileCalculatorActivity extends AppCompatActivity implements View.On
     Switch centeringSwitch;
     Switch usingRemnantSwitch;
     Switch alongLongSideSwitch;
+    Switch tileOrLaminateSwitch;
 
     DrawingInformation dI;
 
@@ -83,6 +87,13 @@ public class TileCalculatorActivity extends AppCompatActivity implements View.On
                 alongLongSide = b;
             }
         });
+        tileOrLaminateSwitch = findViewById(R.id.TileOrLaminateSwitch);
+        tileOrLaminateSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
+                isLaminate = b;
+            }
+        });
         Button searchTilesByAreaButton = findViewById(R.id.SearchTilesByAreaButton);
         searchTilesByAreaButton.setOnClickListener(this);
         Button backButton = findViewById(R.id.BackButton);
@@ -121,155 +132,111 @@ public class TileCalculatorActivity extends AppCompatActivity implements View.On
     }
 
     private long calculatePieces(DrawingInformation dI) {
-        double length = dI.getLength();
-        double width = dI.getWidth();
-        double tileLength = dI.getTileLength();
-        double tileWidth = dI.getTileWidth();
-        double offset = dI.getOffset();
+        BigDecimal lengthBD = BigDecimal.valueOf(dI.getLength());
+        BigDecimal widthBD = BigDecimal.valueOf(dI.getWidth());
+        BigDecimal tileLengthBD = BigDecimal.valueOf(dI.getTileLength());
+        BigDecimal tileWidthBD = BigDecimal.valueOf(dI.getTileWidth());
+        BigDecimal offsetBD = BigDecimal.valueOf(dI.getOffset());
         if(dI.isCentering()){
-            if(dI.isAlongLongSide()){
-                BigDecimal lengthBD = new BigDecimal(length);
-                BigDecimal widthBD = new BigDecimal(width);
-                BigDecimal tileLengthBD = new BigDecimal(tileLength);
-                BigDecimal tileWidthBD = new BigDecimal(tileWidth);
-                BigDecimal divisionL = lengthBD.divide(tileLengthBD, 0, RoundingMode.HALF_DOWN);
-                BigDecimal divisionW = widthBD.divide(tileWidthBD, 0, RoundingMode.HALF_DOWN);
-
-                if(divisionL.compareTo(lengthBD.divide(tileLengthBD, 9, RoundingMode.HALF_DOWN)) < 0){
-                    divisionL = divisionL.add(new BigDecimal("1.0"));
-                }
-                if(divisionW.compareTo(widthBD.divide(tileWidthBD, 9, RoundingMode.HALF_DOWN)) < 0){
-                    divisionW = divisionW.add(new BigDecimal("1.0"));
-                }
-                return divisionL.multiply(divisionW).setScale(0, RoundingMode.UP).longValue();
-            } else{
-                BigDecimal lengthBD = new BigDecimal(length);
-                BigDecimal widthBD = new BigDecimal(width);
-                BigDecimal tileLengthBD = new BigDecimal(tileLength);
-                BigDecimal tileWidthBD = new BigDecimal(tileWidth);
-                BigDecimal divisionL = widthBD.divide(tileLengthBD, 0,RoundingMode.HALF_UP);
-                BigDecimal divisionW = lengthBD.divide(tileWidthBD, 0, RoundingMode.HALF_UP);
-                if(divisionL.compareTo(widthBD.divide(tileLengthBD, 9, RoundingMode.HALF_DOWN)) < 0){
-                    divisionL = divisionL.add(new BigDecimal("1.0"));
-                }
-                if(divisionW.compareTo(lengthBD.divide(tileWidthBD, 9, RoundingMode.HALF_DOWN)) < 0){
-                    divisionW = divisionW.add(new BigDecimal("1.0"));
-                }
-                return divisionL.multiply(divisionW).setScale(0, RoundingMode.UP).longValue();
-            }
+            return calculateCentering(lengthBD, widthBD, tileLengthBD, tileWidthBD);
         } else if(dI.isUsingRemnant()){
-            if(dI.isAlongLongSide()){
-                BigDecimal lengthBD = new BigDecimal(length);
-                BigDecimal widthBD = new BigDecimal(width);
-                BigDecimal tileLengthBD = new BigDecimal(tileLength);
-                BigDecimal tileWidthBD = new BigDecimal(tileWidth);
-                BigDecimal divisionL = lengthBD.divide(tileLengthBD, 9, RoundingMode.HALF_UP);
-                BigDecimal divisionW = widthBD.divide(tileWidthBD, 0, RoundingMode.HALF_UP);
-                if(divisionW.compareTo(widthBD.divide(tileWidthBD, 9, RoundingMode.HALF_UP)) < 0){
-                    divisionW = divisionW.add(new BigDecimal("1.0"));
-                }
-                return divisionL.multiply(divisionW).setScale(0, RoundingMode.UP).longValue();
-            } else{
-                BigDecimal lengthBD = new BigDecimal(length);
-                BigDecimal widthBD = new BigDecimal(width);
-                BigDecimal tileLengthBD = new BigDecimal(tileLength);
-                BigDecimal tileWidthBD = new BigDecimal(tileWidth);
-                BigDecimal divisionL = widthBD.divide(tileLengthBD, 9, RoundingMode.HALF_UP);
-                BigDecimal divisionW = lengthBD.divide(tileWidthBD, 0, RoundingMode.HALF_UP);
-                if(divisionW.compareTo(lengthBD.divide(tileWidthBD, 9, RoundingMode.HALF_DOWN)) < 0){
-                    divisionW = divisionW.add(new BigDecimal("1.0"));
-                }
-                return divisionL.multiply(divisionW).setScale(0, RoundingMode.UP).longValue();
-            }
+            return calculateUsingRemnant(lengthBD, widthBD, tileLengthBD, tileWidthBD);
         } else{
-            if(dI.isAlongLongSide()){
-                BigDecimal offsetBD = new BigDecimal(offset);
-                BigDecimal lengthBD = new BigDecimal(length);
-                BigDecimal widthBD = new BigDecimal(width);
-                BigDecimal tileLengthBD = new BigDecimal(tileLength);
-                BigDecimal tileWidthBD = new BigDecimal(tileWidth);
-                BigDecimal divisionL = lengthBD.divide(tileLengthBD, 0, RoundingMode.HALF_UP);
-                BigDecimal divisionW = widthBD.divide(tileWidthBD, 0, RoundingMode.HALF_UP);
-                if (offsetBD.compareTo(new BigDecimal("0")) == 0){
-                    if(divisionL.compareTo(lengthBD.divide(tileLengthBD, 9, RoundingMode.HALF_UP)) < 0){
-                        divisionL = divisionL.add(new BigDecimal("0.5"));
-                    }
-                    if(divisionW.compareTo(widthBD.divide(tileWidthBD, 9, RoundingMode.HALF_DOWN)) < 0){
-                        divisionW = divisionW.add(new BigDecimal("1.0"));
-                    }
-                    return divisionL.multiply(divisionW).setScale(0, RoundingMode.UP).longValue();
-                } else {
-                    if(divisionL.compareTo(lengthBD.divide(tileLengthBD, 3, RoundingMode.HALF_UP)) < 0){
-                        divisionL = divisionL.add(new BigDecimal("1.0"));
-                    }
-                    if(divisionW.compareTo(widthBD.divide(tileWidthBD, 3, RoundingMode.HALF_UP)) < 0){
-                        divisionW = divisionW.add(new BigDecimal("1.0"));
-                    }
-                    if(divisionL.multiply(tileLengthBD).compareTo(lengthBD) <= 0 ){
-                        return divisionL.multiply(divisionW).setScale(0, RoundingMode.UP).longValue();
-                    } else{
-                        BigDecimal tileRest = (divisionL.multiply(tileLengthBD).subtract(lengthBD))
-                                .divide(tileLengthBD, 9, RoundingMode.HALF_UP);
-                        if(offsetBD.compareTo(new BigDecimal("0.5")) > 0){
-                            offsetBD = new BigDecimal("1").subtract(offsetBD);
-                        }
-                        if(tileRest.compareTo(offsetBD) >= 1){
-                            BigDecimal repeatRows = new BigDecimal("1")
-                                    .divide(offsetBD, 9, RoundingMode.HALF_UP);
-                            BigDecimal repeat = divisionW.divide(repeatRows, 0, RoundingMode.HALF_UP);
-                            if(repeat.compareTo(divisionW.divide(repeatRows, 0, RoundingMode.HALF_UP)) > 0){
-                                repeat = repeat.subtract(new BigDecimal("1.0"));
-                            }
-                            return divisionL.multiply(divisionW).subtract(repeat).setScale(0, RoundingMode.UP).longValue();
-                        }
-                        return divisionL.multiply(divisionW).setScale(0, RoundingMode.UP).longValue();
-                    }
+            return calculateUseOffset(lengthBD, widthBD, tileLengthBD, tileWidthBD, offsetBD);
+        }
+    }
+
+    private long calculateCentering(BigDecimal lengthBD, BigDecimal widthBD,
+                                      BigDecimal tileLengthBD, BigDecimal tileWidthBD){
+        BigDecimal divisionL;
+        BigDecimal divisionW;
+        if(dI.isAlongLongSide()){
+            divisionL = checkRoundingDivisionLength(lengthBD, tileLengthBD);
+            divisionW = checkRoundingDivisionWidth(widthBD, tileWidthBD);
+        } else{
+            divisionL = checkRoundingDivisionLength(widthBD, tileLengthBD);
+            divisionW = checkRoundingDivisionWidth(lengthBD, tileWidthBD);
+        }
+        return divisionL.multiply(divisionW).setScale(0, RoundingMode.UP).longValue();
+    }
+
+    private long calculateUsingRemnant(BigDecimal lengthBD, BigDecimal widthBD,
+                                         BigDecimal tileLengthBD, BigDecimal tileWidthBD){
+        BigDecimal divisionL;
+        BigDecimal divisionW;
+        if(dI.isAlongLongSide()){
+            divisionL = lengthBD.divide(tileLengthBD, 9, RoundingMode.HALF_UP);
+            divisionW = checkRoundingDivisionWidth(widthBD, tileWidthBD);
+        } else{
+            divisionL = widthBD.divide(tileLengthBD, 9, RoundingMode.HALF_UP);
+            divisionW = checkRoundingDivisionWidth(lengthBD, tileWidthBD);
+        }
+        return divisionL.multiply(divisionW).setScale(0, RoundingMode.UP).longValue();
+    }
+
+    private long calculateUseOffset(BigDecimal lengthBD, BigDecimal widthBD,
+                                    BigDecimal tileLengthBD, BigDecimal tileWidthBD, BigDecimal offsetBD){
+        if(dI.isAlongLongSide()){
+            BigDecimal divisionL = checkRoundingDivisionLength(lengthBD, tileLengthBD);
+            BigDecimal divisionW = checkRoundingDivisionWidth(widthBD, tileWidthBD);
+            return continueCalculateUseOffset(divisionL, divisionW, offsetBD, lengthBD, tileLengthBD);
+        } else{
+            BigDecimal divisionL = checkRoundingDivisionLength(widthBD, tileLengthBD);
+            BigDecimal divisionW = checkRoundingDivisionWidth(lengthBD, tileWidthBD);
+            return continueCalculateUseOffset(divisionL, divisionW, offsetBD, widthBD, tileLengthBD);
+        }
+    }
+
+    private long continueCalculateUseOffset(BigDecimal divisionL, BigDecimal divisionW,
+                                                   BigDecimal offsetBD, BigDecimal lengthBD, BigDecimal tileLengthBD){
+        BigDecimal tileRest = divisionL.multiply(tileLengthBD)
+                .subtract(lengthBD)
+                .divide(tileLengthBD, 9, RoundingMode.HALF_UP);
+        if (offsetBD.compareTo(zeroBD) == 0){
+            if(!isLaminate) {
+                boolean restMoorHalf = tileRest
+                        .compareTo(halfOneBD) >= 0;
+                if(restMoorHalf){
+                    divisionL = divisionL.subtract(halfOneBD);
                 }
-            } else{
-                BigDecimal offsetBD = new BigDecimal(offset);
-                BigDecimal lengthBD = new BigDecimal(length);
-                BigDecimal widthBD = new BigDecimal(width);
-                BigDecimal tileLengthBD = new BigDecimal(tileLength);
-                BigDecimal tileWidthBD = new BigDecimal(tileWidth);
-                BigDecimal divisionL = widthBD.divide(tileLengthBD, 0,RoundingMode.HALF_DOWN);
-                BigDecimal divisionW = lengthBD.divide(tileWidthBD, 0, RoundingMode.HALF_UP);
-                if (offsetBD.compareTo(new BigDecimal("0")) == 0){
-                    if(divisionL.compareTo(widthBD.divide(tileLengthBD, 9, RoundingMode.HALF_DOWN)) < 0){
-                        divisionL = divisionL.add(new BigDecimal("0.5"));
+            }
+        } else {
+            if (divisionL.multiply(tileLengthBD).compareTo(lengthBD) > 0) {
+                if (offsetBD.compareTo(halfOneBD) > 0) {
+                    offsetBD = oneBD.subtract(offsetBD);
+                }
+                if (tileRest.compareTo(offsetBD) >= 1) {
+                    BigDecimal repeatRows = oneBD
+                            .divide(offsetBD, 9, RoundingMode.HALF_UP);
+                    BigDecimal repeat = divisionW.divide(repeatRows, 0, RoundingMode.HALF_UP);
+                    if (repeat.compareTo(divisionW.divide(repeatRows, 9, RoundingMode.HALF_UP)) > 0) {
+                        repeat = repeat.subtract(oneBD);
                     }
-                    if(divisionW.compareTo(lengthBD.divide(tileWidthBD, 9, RoundingMode.HALF_DOWN)) < 0){
-                        divisionW = divisionW.add(new BigDecimal("1.0"));
-                    }
-                    return divisionL.multiply(divisionW).setScale(0, RoundingMode.UP).longValue();
-                } else{
-                    if(divisionL.compareTo(widthBD.divide(tileLengthBD, 3, RoundingMode.HALF_DOWN)) < 0){
-                        divisionL = divisionL.add(new BigDecimal("1.0"));
-                    }
-                    if(divisionW.compareTo(lengthBD.divide(tileWidthBD, 3, RoundingMode.HALF_DOWN)) < 0){
-                        divisionW = divisionW.add(new BigDecimal("1.0"));
-                    }
-                    if(divisionL.multiply(tileLengthBD).compareTo(widthBD) <= 0 ){
-                        return divisionL.multiply(divisionW).setScale(0, RoundingMode.UP).longValue();
-                    } else{
-                        BigDecimal tileRest = divisionL.multiply(tileLengthBD).subtract(widthBD)
-                                .divide(tileLengthBD, 9, RoundingMode.HALF_UP);
-                        if(offsetBD.compareTo(new BigDecimal("0.5")) > 0){
-                            offsetBD = new BigDecimal("1").subtract(offsetBD);
-                        }
-                        if(tileRest.compareTo(offsetBD) >= 1){
-                            BigDecimal repeatRows = new BigDecimal("1")
-                                    .divide(offsetBD, 9, RoundingMode.HALF_UP);
-                            BigDecimal repeat = divisionW.divide(repeatRows, 0, RoundingMode.HALF_UP);
-                            if(repeat.compareTo(divisionW.divide(repeatRows, 0, RoundingMode.HALF_UP)) > 0){
-                                repeat = repeat.subtract(new BigDecimal("1.0"));
-                            }
-                            return divisionL.multiply(divisionW).subtract(repeat).setScale(0, RoundingMode.UP).longValue();
-                        }
-                        return divisionL.multiply(divisionW).setScale(0, RoundingMode.UP).longValue();
-                    }
+                    return divisionL.multiply(divisionW).subtract(repeat).setScale(0, RoundingMode.UP).longValue();
                 }
             }
         }
+        return divisionL.multiply(divisionW).setScale(0, RoundingMode.UP).longValue();
+    }
+
+    private BigDecimal checkRoundingDivisionWidth(BigDecimal widthBD, BigDecimal tileWidthBD){
+        BigDecimal divisionW = widthBD.divide(tileWidthBD, 0, RoundingMode.HALF_UP);
+        if(divisionW.compareTo(widthBD.divide(tileWidthBD, 9, RoundingMode.HALF_UP)) < 0){
+            if(isLaminate){
+                return divisionW.add(oneBD);
+            } else {
+                return divisionW.add(halfOneBD);
+            }
+        }
+        return divisionW;
+    }
+
+    private BigDecimal checkRoundingDivisionLength(BigDecimal lengthBD, BigDecimal tileLengthBD){
+        BigDecimal divisionL = lengthBD.divide(tileLengthBD, 0, RoundingMode.HALF_UP);
+        if(divisionL.compareTo(lengthBD.divide(tileLengthBD, 9, RoundingMode.HALF_UP)) < 0){
+            return divisionL.add(oneBD);
+        }
+        return divisionL;
     }
 
     private DrawingInformation getDI(){
@@ -302,15 +269,15 @@ public class TileCalculatorActivity extends AppCompatActivity implements View.On
         } else {
             int i = Integer.parseInt(offsetS);
             if( i == 33){
-                offset = 0.334;
+                offset = 0.33334;
             } else if( i == 66){
-                offset = 0.667;
+                offset = 0.66667;
             } else {
                 offset = i/100.0;
             }
         }
         return new DrawingInformation(areaLength, areaWidth,
-                tileLength, tileWidth, offset, usingRemnant, centering, alongLongSide);
+                tileLength, tileWidth, offset, usingRemnant, centering, alongLongSide, isLaminate);
     }
 
     private boolean checkDrowningInformation(String areaLengthS, String areaWidthS,
@@ -322,9 +289,6 @@ public class TileCalculatorActivity extends AppCompatActivity implements View.On
         double areaWidth = Double.parseDouble(areaWidthS);
         double tileLength = Double.parseDouble(tileLengthS);
         double tileWidth = Double.parseDouble(tileWidthS);
-        if (areaLength == 0 ||  areaWidth == 0 || tileLength == 0 || tileWidth == 0){
-            return false;
-        }
-        return true;
+        return areaLength != 0 && areaWidth != 0 && tileLength != 0 && tileWidth != 0;
     }
 }

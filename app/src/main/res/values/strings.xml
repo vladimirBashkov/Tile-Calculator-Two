@@ -38,6 +38,7 @@
     <string name="CenteringSwitch">Centering</string>
     <string name="UsingRemnantSwitch">Using remnant</string>
     <string name="AlongLongSideSwitch">Along long side</string>
+    <string name="TileOrLaminateSwitch">Tile / Laminate</string>
     <string name="SearchTilesByAreaButton">Search tiles by area</string>
     <string name="SearchTilesResultText">Result (pcs)</string>
     <string name="BackButton">Back</string>

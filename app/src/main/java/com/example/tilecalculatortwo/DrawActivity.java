@@ -8,7 +8,6 @@ import android.graphics.Paint;
 import android.graphics.Rect;
 import android.os.Bundle;
 import android.view.View;
-
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 
@@ -45,8 +44,10 @@ public class DrawActivity extends AppCompatActivity {
         protected void onDraw(Canvas canvas) {
             if(dI == null){
                 canvas.drawRGB( 255, 255, 255);
+                canvas.drawLine(0,0, getWidth(), getHeight(), p);
+                canvas.drawLine(0,getHeight(),getWidth(),0, p);
+
             } else{
-                canvas.drawRGB( 255, 255, 255);
                 drowning(canvas);
             }
         }
@@ -160,9 +161,9 @@ public class DrawActivity extends AppCompatActivity {
                     if(i==0){
                         stepBeforeBD = new BigDecimal("0");
                     }
-                    if (stepBeforeBD.multiply(tileLengthBD).compareTo(tileLengthBD) > 0){
+                    if (stepBeforeBD.compareTo(new BigDecimal("1.0")) >= 0){
                         stepBeforeBD = stepBeforeBD
-                                .subtract(stepBeforeBD.divide(tileLengthBD, 0, RoundingMode.DOWN));
+                                .subtract(new BigDecimal("1.0"));
                     }
                     BigDecimal addForRest = centeringStepBD.add(restBD).add(stepBeforeBD);
                     for (int j = 0; j < tilesInRowBD.intValue(); j++) {
@@ -192,7 +193,7 @@ public class DrawActivity extends AppCompatActivity {
                         restBD = restLengthBD.divide(tileLengthBD, 9, RoundingMode.HALF_UP);
                     }
                 }
-                backgroundPainting(canvas, left, top, right, bottom);
+                backgroundPainting(canvas, left, top, right, bottom, Double.toString(length), Double.toString(width));
 
             } else {
                 BigDecimal lengthBD = new BigDecimal(length);
@@ -221,9 +222,9 @@ public class DrawActivity extends AppCompatActivity {
                     if(i==0){
                         stepBeforeBD = new BigDecimal("0");
                     }
-                    if (stepBeforeBD.multiply(tileLengthBD).compareTo(tileLengthBD) > 0){
+                    if (stepBeforeBD.compareTo(new BigDecimal("1.0")) >= 0){
                         stepBeforeBD = stepBeforeBD
-                                .subtract(stepBeforeBD.divide(tileLengthBD, 0, RoundingMode.DOWN));
+                                .subtract(new BigDecimal("1.0"));
                     }
                     BigDecimal addForRest = centeringStepBD.add(restBD).add(stepBeforeBD);
                     for (int j = 0; j < tilesInRowBD.intValue(); j++) {
@@ -234,7 +235,7 @@ public class DrawActivity extends AppCompatActivity {
                         int xPointTwo = left + stepX.multiply(addForRest.add(new BigDecimal(j+1))).intValue();
                         int yPointTwo  = top + stepY
                                 .multiply(new BigDecimal(i+1)).intValue();
-                        xPointTwo = Math.min(xPointTwo, bottom);
+                        xPointTwo = Math.min(xPointTwo, right);
                         Rect rect = new Rect(xPointOne, yPointOne, xPointTwo, yPointTwo);
                         canvas.drawRect(rect,  p);
                         if (j == 0){
@@ -253,11 +254,11 @@ public class DrawActivity extends AppCompatActivity {
                         restBD = restLengthBD.divide(tileLengthBD, 9, RoundingMode.HALF_UP);
                     }
                 }
-                backgroundPainting(canvas, left, top, right, bottom);
+                backgroundPainting(canvas, left, top, right, bottom, Double.toString(length), Double.toString(width));
 
             }
         }
-        private void backgroundPainting(Canvas canvas, int left, int top, int right, int bottom){
+        private void backgroundPainting(Canvas canvas, int left, int top, int right, int bottom, String length, String width){
             int deviceWidth = canvas.getWidth();
             int deviceHeight = canvas.getHeight();
             p.setStyle(Paint.Style.FILL);
@@ -265,6 +266,12 @@ public class DrawActivity extends AppCompatActivity {
             canvas.drawRect(0, 0, left, deviceHeight,  p);
             canvas.drawRect(right, 0, deviceWidth, deviceHeight,  p);
             canvas.drawRect(0, bottom, deviceWidth, deviceHeight,  p);
+
+            p.setColor(Color.BLUE);
+            p.setTextSize(50);
+            p.setTextAlign(Paint.Align.CENTER);
+            canvas.drawText(width, left + ((right-left)/2), top + 55, p);
+            canvas.drawText(length, right - 55, bottom - ((bottom-top)/2), p);
         }
     }
 }

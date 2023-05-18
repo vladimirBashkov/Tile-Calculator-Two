@@ -37,6 +37,7 @@
     <string name="CenteringSwitch">Centrage</string>
     <string name="UsingRemnantSwitch">Utiliser le reste</string>
     <string name="AlongLongSideSwitch">Le long du côté long</string>
+    <string name="TileOrLaminateSwitch">Carrelage / Stratifié</string>
     <string name="SearchTilesByAreaButton">Recherche</string>
     <string name="SearchTilesResultText">Résultat (pcs)</string>
     <string name="BackButton">Retour</string>

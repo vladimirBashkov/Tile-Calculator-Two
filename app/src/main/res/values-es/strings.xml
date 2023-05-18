@@ -36,6 +36,7 @@
     <string name="CenteringSwitch">Centrado</string>
     <string name="UsingRemnantSwitch">Usando remanente</string>
     <string name="AlongLongSideSwitch">A lo largo del lado largo</string>
+    <string name="TileOrLaminateSwitch">Azulejo / Laminado</string>
     <string name="SearchTilesByAreaButton">Buscar</string>
     <string name="SearchTilesResultText">Resultado (uds)</string>
     <string name="BackButton">De vuelta</string>

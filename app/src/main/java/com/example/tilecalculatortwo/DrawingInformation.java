@@ -11,19 +11,20 @@ public class DrawingInformation implements Serializable {
     boolean usingRemnant;
     boolean centering;
     boolean alongLongSide;
+    boolean isLaminate;
 
-    public DrawingInformation(double length, double width,
-                              double tileLength, double tileWidth,
-                              double offset, boolean usingRemnant,
-                              boolean centering, boolean alongLongSide) {
+    public DrawingInformation(double length, double width, double tileLength,
+                              double tileWidth, double offset, boolean usingRemnant,
+                              boolean centering, boolean alongLongSide, boolean isLaminate) {
         this.length = length;
         this.width = width;
         this.tileLength = tileLength;
         this.tileWidth = tileWidth;
         this.offset = offset;
-        this.centering = centering;
         this.usingRemnant = usingRemnant;
+        this.centering = centering;
         this.alongLongSide = alongLongSide;
+        this.isLaminate = isLaminate;
     }
 
     public double getLength() {
@@ -88,5 +89,13 @@ public class DrawingInformation implements Serializable {
 
     public void setAlongLongSide(boolean alongLongSide) {
         this.alongLongSide = alongLongSide;
+    }
+
+    public boolean isLaminate() {
+        return isLaminate;
+    }
+
+    public void setLaminate(boolean laminate) {
+        isLaminate = laminate;
     }
 }

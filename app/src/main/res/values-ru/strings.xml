@@ -37,6 +37,7 @@
     <string name="CenteringSwitch">Центрирование</string>
     <string name="UsingRemnantSwitch">Использовать остаток</string>
     <string name="AlongLongSideSwitch">Вдоль длинной стены</string>
+    <string name="TileOrLaminateSwitch">Плитка / Ламинат</string>
     <string name="SearchTilesByAreaButton">Расчитать</string>
     <string name="SearchTilesResultText">Результат (шт.)</string>
     <string name="BackButton">Назад</string>
